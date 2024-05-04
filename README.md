@@ -21,7 +21,6 @@ Before you begin, ensure you have met the following requirements:
 - You have `git` installed on your computer.
 - You have `Node.js` and `npm` (Node Package Manager) installed.
 - You have a Moralis API key, get yours at <a href="https://admin.moralis.io/" target="_blank">https://admin.moralis.io/</a>
-- Configure your `API_KEY` environment variable by running `export API_KEY=.....` in the terminal window
 
 ### Cloning the Repository
 
@@ -30,22 +29,25 @@ To clone this project, follow these steps:
 1. Open your terminal (Command Prompt, PowerShell, or any other terminal).
 2. Navigate to the directory where you want to clone the project.
 3. Clone the repository by running:
-`git clone https://github.com/salisbury88/moralis-demo-app.git`
-4. cd into the project-repository-name
-5. `npm install` to install all the packages and dependencies
-6. Get an API Key from Moralis
-7. Configure the necessary environment variables (see Prerequisites & Config)
+`git clone git@github.com:MoralisWeb3/demo-app.git`
+4. cd into the demo-app repository
 
 ### Local Development
+
+#### Start Server
 To start a local development server on `3001`, run the following command in the root of the project:
 
+
 ```sh
+export API_KEY=.....
+npm install
 node index.js
 ```
 
 Then, in a new terminal, switch to the client:
 ```sh
 cd client
+npm install
 ```
 
 And start the React frontend:
