@@ -26,14 +26,6 @@ router.post('/api/token', async function(req,res,next) {
 
         let tokenMetadata = await get_metadata.json();
 
-        // const ownersPromise = fetch(`https://deep-index.moralis.io/api/v2.2/erc20/${tokenAddress}/owners`, {
-        //         method: 'GET',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'X-API-Key': API_KEY
-        //         }
-        //     });
-
         const pricePromise = fetch(`https://deep-index.moralis.io/api/v2.2/erc20/${tokenAddress}/price?include=percent_change`, {
             method: 'GET',
             headers: {
@@ -65,10 +57,6 @@ router.post('/api/token', async function(req,res,next) {
         const tokenPrice = await priceResponse.json();
         const blockCreated = await blockResponse.json();
 
-        // const totalPercentageHeld = tokenOwners.result.slice(0, 10).reduce((acc, curr) => {
-        //     return acc + (curr.percentage_relative_to_total_supply || 0); // Add || 0 to handle any undefined or null values gracefully
-        // }, 0);
-
         if(tokenMetadata[0].total_supply_formatted) {
             if(tokenPrice.usdPrice) {
                 tokenMetadata[0].fdv = Number(tokenMetadata[0].total_supply_formatted)*Number(tokenPrice.usdPrice);
@@ -87,8 +75,6 @@ router.post('/api/token', async function(req,res,next) {
         return res.status(200).json({
             tokenAddress,
             tokenMetadata:tokenMetadata[0],
-            // tokenOwners:tokenOwners.result,
-            // topTenPercentageHeld: totalPercentageHeld,
             tokenPrice,
             blockCreated
         });
@@ -110,15 +96,7 @@ router.get('/api/token/:tokenAddress', async function(req,res,next) {
             }
         });
 
-        const transfersPromise = fetch(`${baseURL}/erc20/${tokenAddress}/transfers?limit=50`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'X-API-Key': API_KEY
-            }
-        });
-
-        const [ownersResponse, transfersResponse] = await Promise.all([ownersPromise, transfersPromise]);
+        const [ownersResponse,] = await Promise.all([ownersPromise]);
 
         if (!ownersResponse.ok) {
             console.log(ownersResponse)
@@ -126,14 +104,7 @@ router.get('/api/token/:tokenAddress', async function(req,res,next) {
             return res.status(500).json(message);
         }
 
-        if (!transfersResponse.ok) {
-            console.log(transfersResponse)
-            const message = await transfersResponse.json();
-            return res.status(500).json(message);
-        }
-
         const tokenOwners = await ownersResponse.json();
-        const tokenTransfers = await transfersResponse.json();
         
         let topTenHolders = [];
         if(tokenOwners && tokenOwners.result && tokenOwners.result.length > 0) {
@@ -143,7 +114,6 @@ router.get('/api/token/:tokenAddress', async function(req,res,next) {
         let totalBalance = topTenHolders.reduce((acc, holder) => acc + Number(holder.balance_formatted), 0);
         let totalUsd = topTenHolders.reduce((acc, holder) => acc + Number(holder.usd_value), 0);
         let totalPercentage = topTenHolders.reduce((acc, holder) => acc + holder.percentage_relative_to_total_supply, 0);
-
 
         const results = await Promise.all(topTenHolders.map(owner => fetchDataForOwner(owner)));
 
@@ -167,7 +137,6 @@ router.get('/api/token/:tokenAddress', async function(req,res,next) {
         });
 
         return res.status(200).json({
-            tokenTransfers: tokenTransfers.result,
             tokenOwners: tokenOwners.result,
             topTokenOwners: results,
             totalBalance,totalUsd,totalPercentage, commonTokens
@@ -177,6 +146,38 @@ router.get('/api/token/:tokenAddress', async function(req,res,next) {
         next(e);
     }
 });
+
+router.get('/api/token/:tokenAddress/transfers', async function(req,res,next) {
+    try {
+        let tokenAddress = req.params.tokenAddress;
+
+        const transfersPromise = fetch(`${baseURL}/erc20/${tokenAddress}/transfers?limit=50`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'X-API-Key': API_KEY
+            }
+        });
+
+        const [transfersResponse] = await Promise.all([transfersPromise]);
+
+        if (!transfersResponse.ok) {
+            console.log(transfersResponse)
+            const message = await transfersResponse.json();
+            return res.status(500).json(message);
+        }
+
+        const tokenTransfers = await transfersResponse.json();
+
+        return res.status(200).json({
+            tokenTransfers: tokenTransfers.result
+        });
+
+    } catch(e) {
+        next(e);
+    }
+});
+
 
 router.get('/api/token/:tokenAddress/prices', async function(req, res, next) {
     try {
@@ -248,13 +249,6 @@ router.get('/api/token/:tokenAddress/prices', async function(req, res, next) {
 
         price_blocks.reverse();
 
-        console.log(`First price ${firstPrice}`)
-        console.log(`Last price ${lastPrice}`)
-        console.log(`Direction ${direction}`)
-        console.log(`Percentage change ${percentageChange}`)
-        console.log(`USD change ${usdChange}`)
-        
-
         return res.status(200).json({ 
             tokenPrices: price_blocks,
             tokenPriceStats: {
@@ -282,8 +276,7 @@ async function fetchDataForOwner(owner) {
                 'X-API-Key': API_KEY
             }
         });
-        console.log(`${owner} DONE`)
-        // Process balanceResponse only if OK, otherwise keep balanceData as []
+       
         if (balanceResponse.ok) {
             let balances = await balanceResponse.json();
             balanceData = balances.result.filter(item => item.token_address !== "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE");

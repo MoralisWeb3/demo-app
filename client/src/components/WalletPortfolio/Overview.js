@@ -166,7 +166,7 @@ const Overview = () => {
                   <div className="col networth">
                     <div className="heading">Cross-chain Networth</div>
                     <div className="big-value">
-                    ${globalDataCache.networth}
+                    ${globalDataCache.networth ? utilities.formatPriceNumber(Number(globalDataCache.networth).toFixed(0)) : "0"}
                     </div>
                   </div>
 

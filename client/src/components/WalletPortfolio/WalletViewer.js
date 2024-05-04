@@ -30,7 +30,6 @@ function WalletViewer() {
     const debouncedSubmit = debounce(() => {
       if (walletAddress && !globalDataCache.profile) {
         setLoading(true);
-        console.log('WALLET CHANGED!');
         fetchWallet(walletAddress);
       }
     }, 300); // Adjust the delay as needed
@@ -51,7 +50,6 @@ function WalletViewer() {
   const fetchWallet = async (address) => {
     try {
 
-      console.log("FETING WALLET!!")
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/wallet?chain=${globalDataCache.selectedChain ? globalDataCache.selectedChain : 'eth'}`, {
         method: 'POST',
         headers: {
@@ -59,8 +57,6 @@ function WalletViewer() {
         },
         body: JSON.stringify({ walletAddress:address }),
       });
-
-      console.log("got reply")
       
       if (response.ok) {
         const data = await response.json();

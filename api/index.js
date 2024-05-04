@@ -1,12 +1,11 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import moment from 'moment';
+import { ethers } from 'ethers';
 import * as utilities from './utilities.js';
 const API_KEY = process.env.API_KEY;
 const baseURL = "https://deep-index.moralis.io/api/v2.2";
 const router = express.Router();
-const chains = ['eth', 'polygon', 'bsc', 'optimism', 'base', 'gnosis', 'fantom', 'avalanche', 'arbitrum', 'cronos'];
- 
 
 router.get('/api/market-data', async function(req,res,next) {
   try {
@@ -163,7 +162,8 @@ router.post('/api/wallet', async function(req,res,next) {
     unstoppable = ud_domain.name;
 
     // Fetching wallet chains and balance in parallel
-    const queryString = chains.map(chain => `chains=${chain}`).join('&');
+    const queryString = utilities.chains.map(chain => `chains=${chain.chain}`).join('&');
+    console.log(queryString)
     const walletChainsPromise = fetch(`${baseURL}/wallets/${address}/chains?${queryString}`, {
       method: 'GET',
       headers: {
@@ -219,7 +219,7 @@ router.post('/api/wallet', async function(req,res,next) {
     let isFresh = false;
 
       //100 eth
-      if(balance.balance > 100000000000000000000) isWhale = true;
+      if(ethers.formatEther(balance.balance) > ethers.formatEther(`100000000000000000000`)) isWhale = true;
   
       let wallet_chains = [];
       let earlyAdopterDate = new Date("2016-01-01");

@@ -2,54 +2,20 @@ import express from 'express';
 import fetch from 'node-fetch';
 import moment from 'moment';
 import { ethers } from 'ethers';
+import * as utilities from './utilities.js';
 const API_KEY = process.env.API_KEY;
 const baseURL = "https://deep-index.moralis.io/api/v2.2";
 const router = express.Router();
-const chains = [{
-    chain:"eth",
-    id:"0x1"
-}, {
-    chain: "polygon",
-    id: "0x89"
-}, {
-    chain: "bsc",
-    id: "0x38"
-}, {
-    chain: "fantom",
-    id: "0xfa"
-}, {
-    chain: "avalanche",
-    id: "0xa86a"
-}, {
-    chain: "arbitrum",
-    id: "0xa4b1"
-}, {
-    chain: "cronos",
-    id: "0x19"
-}, {
-    chain: "palm",
-    id: "0x2a15c308d"
-}, {
-    chain: "base",
-    id: "0x2105"
-}, {
-    chain: "gnosis",
-    id: "0x64"
-}, {
-    chain: "optimism",
-    id: "0xa"
-}];
 
 const fetchHistory = async (address, chain, from_date, to_date) => {
-    let foundChain = chains.find(item => item.chain === chain);
+    let foundChain = utilities.chains.find(item => item.chain === chain);
     let cursor = null;
     let page = 0;
     let all_txs = [];
     let url = `${baseURL}/wallets/${address}/history?chain=${chain}&nft_metadata=true&from_date=${from_date}&include_input_data=true`;
-    if(to_date) {
-        url = `${baseURL}/wallets/${address}/history?chain=${chain}&nft_metadata=true&from_date=${from_date}&to_date=${to_date}&include_input_data=true`;
+    if (to_date) {
+        url += `&to_date=${to_date}`;
     }
-    console.log(`${baseURL}/wallets/${address}/history?chain=${chain}&nft_metadata=true&from_date=${from_date}&to_date=${to_date}&include_input_data=true`)
     do {
         const response = await fetch(`${url}&cursor=${cursor}`, {
             method: 'GET',
@@ -60,9 +26,7 @@ const fetchHistory = async (address, chain, from_date, to_date) => {
         });
 
         if (!response.ok) {
-            console.log(response.statusText)
             const message = await response.json();
-            console.log(message)
             throw new Error(message);
         }
 
@@ -80,11 +44,6 @@ const fetchHistory = async (address, chain, from_date, to_date) => {
                 tx.chainId = foundChain.id;
                 tx.gas_price = ethers.formatEther(Number(tx.gas_price))
                 tx.gas_paid = tx.gas_price*Number(tx.receipt_gas_used);
-                // tx.gas = {
-                //     price: ethers.formatEther(Number(tx.gas_price)),
-                //     used: ethers.formatEther(Number(tx.receipt_gas_used)),
-                //     paid: ethers.formatEther(Number(tx.gas_price)*Number(tx.receipt_gas_used))
-                // }
                 tx.explorerUrl = chain === "eth" ? "https://etherscan.com" : "https://polygonscan.com";
                 tx.date_label = `${moment(tx.block_timestamp).format('Do MMMM')}, ${moment(tx.block_timestamp).format('YYYY')}`;
                 const txDate = moment(tx.block_timestamp);
@@ -106,8 +65,6 @@ const fetchHistory = async (address, chain, from_date, to_date) => {
         }
         
         cursor = txs.cursor;
-        console.log(`Page ${txs.page}, chain ${chain} cursor is ${txs.cursor}`)
-
         page = txs.page;
 
     } while (cursor != "" && cursor != null && cursor != undefined);
@@ -118,7 +75,6 @@ const fetchHistory = async (address, chain, from_date, to_date) => {
 router.get('/api/wallet/history/new', async function(req,res,next) {
     try {
         const address = req.query.wallet;
-        const chain = req.query.chain ? req.query.chain : 'eth';
         const to_date = req.query.lastDate;
         let txs = [];
         
@@ -133,15 +89,6 @@ router.get('/api/wallet/history/new', async function(req,res,next) {
             from_date = moment(to_date).subtract(Number(day), 'days').format('YYYY-MM-DD');
         }
 
-        console.log(`From: ${from_date}, to: ${to_date}`)
-
-        // const check_chains = await fetch(`${baseURL}/wallets/${address}/chains?chains=eth&chains=polygon&chains=base&chains=optimism&chains=bsc&chains=fantom&chains=avalanche&chains=arbitrum&chains=cronos&chains=palm`,{
-        //     method: 'get',
-        //     headers: {accept: 'application/json', 'X-API-Key': `${API_KEY}`}
-        // });
-        // const active_chains = await check_chains.json();
-        // let wallet_chains = active_chains.active_chains;
-
         Promise.all([
             fetchHistory(address, "eth", from_date, to_date),
             fetchHistory(address, "polygon", from_date, to_date),
@@ -152,7 +99,6 @@ router.get('/api/wallet/history/new', async function(req,res,next) {
         ]).then(responses => {
             
             txs = responses.flatMap(innerArray => innerArray);
-
             txs.sort((a, b) => b.block_timestamp.localeCompare(a.block_timestamp));
             return res.status(200).json({txs, lastDate:from_date});
         }).catch(error => {

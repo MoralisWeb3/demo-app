@@ -29,7 +29,7 @@ To clone this project, follow these steps:
 1. Open your terminal (Command Prompt, PowerShell, or any other terminal).
 2. Navigate to the directory where you want to clone the project.
 3. Clone the repository by running:
-`git clone git@github.com:MoralisWeb3/demo-app.git`
+`git clone https://github.com/MoralisWeb3/demo-app`
 4. cd into the demo-app repository
 
 ### Local Development

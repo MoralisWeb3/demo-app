@@ -68,6 +68,7 @@ const TokenDashboard = ({topOwnersLoading, tokenPricesLoading}) => {
             token:data
         }));
         fetchChartPrices(address);
+        fetchTransfers(address);
         fetchTopOwners(address);
             
       } else {
@@ -119,13 +120,34 @@ const TokenDashboard = ({topOwnersLoading, tokenPricesLoading}) => {
             ...prevData,
             token: {
                 ...prevData.token,
-                tokenTransfers:data.tokenTransfers,
                 tokenOwners: data.tokenOwners,
                 topTokenOwners: data.topTokenOwners,
                 totalBalance:data.totalBalance,
                 totalUsd:data.totalUsd,
                 totalPercentage:data.totalPercentage,
                 commonTokens:data.commonTokens
+            }
+          }));
+        })
+        .catch((error) => {
+          setError(error);
+        });
+  }
+
+  const fetchTransfers = (address) => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/token/${address}/transfers`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setGlobalDataCache(prevData => ({
+            ...prevData,
+            token: {
+                ...prevData.token,
+                tokenTransfers:data.tokenTransfers
             }
           }));
         })
@@ -200,7 +222,7 @@ const TokenDashboard = ({topOwnersLoading, tokenPricesLoading}) => {
 
 
                         <div className="token-price">${utilities.formatPriceNumber(globalDataCache.token.tokenPrice.usdPrice)} <span className={globalDataCache.token.tokenPrice["24hrPercentChange"] && globalDataCache.token.tokenPrice["24hrPercentChange"] < 0 ? "negative" : "positive"}>{Number(globalDataCache.token.tokenPrice["24hrPercentChange"]).toFixed(2)}%</span></div>
-                        <div className="exchange-price">updated a few seconds ago at {globalDataCache.token.tokenPrice.exchangeName}</div>
+                        <div className="exchange-price">as of block {globalDataCache.token.tokenPrice.priceLastChangedAtBlock} from {globalDataCache.token.tokenPrice.exchangeName}</div>
                     </div>
 
                     <div className="col-lg-8">
@@ -374,21 +396,22 @@ const TokenDashboard = ({topOwnersLoading, tokenPricesLoading}) => {
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: activeTab === '1' })}
-                                onClick={() => { toggle('1'); }}>Token Holders
+                                onClick={() => { toggle('1'); }}>Token Transfers
                             </NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: activeTab === '2' })}
-                                onClick={() => { toggle('2'); }}>Holder Insights
+                                onClick={() => { toggle('2'); }}>Token Holders
                             </NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: activeTab === '3' })}
-                                onClick={() => { toggle('3'); }}>Token Transfers
+                                onClick={() => { toggle('3'); }}>Holder Insights
                             </NavLink>
                         </NavItem>
+                        
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: activeTab === '4' })}
@@ -411,6 +434,53 @@ const TokenDashboard = ({topOwnersLoading, tokenPricesLoading}) => {
 
                     <TabContent activeTab={activeTab}>
                         <TabPane tabId="1">
+                            <h2>Activity</h2>
+                            <ul>
+                            {globalDataCache.token.tokenTransfers && globalDataCache.token.tokenTransfers.map(item => (
+                                <li className="transfer-item">
+                                
+                                        <div className={`category transfer`}>
+                                            <div className={`transfers`}>Transfer</div>
+                                        </div>
+                                        
+                                        <div className="label">
+                                            <div className="group">
+                                                <div className="heading">Amount</div>
+                                                <div className="value">{utilities.formatPriceNumber(Number(item.value_decimal).toFixed(2))}</div>
+                                            </div>
+
+                                            <div className="group">
+                                                <div className="heading">USD Value</div>
+                                                <div className="value">${utilities.formatPriceNumber(Number(Number(item.value_decimal)*globalDataCache.token.tokenPrice.usdPrice).toFixed(2))}</div>
+                                            </div>
+
+                                            <div className="group">
+                                                <div className="heading">From</div>
+                                                <div className="value">{item.from_address_label ? item.from_address_label : utilities.shortAddress(item.from_address)}</div>
+                                            </div>
+
+                                            <div className="group">
+                                                <div className="heading">To</div>
+                                                <div className="value">{item.to_address_label ? item.to_address_label : utilities.shortAddress(item.to_address)}</div>
+                                            </div>
+
+                                            <div className="group">
+                                                <div className="heading">Transaction</div>
+                                                <div className="value copy-container">{utilities.shortAddress(item.transaction_hash)}
+                                                    <CopyToClipboard valueToCopy={item.transaction_hash}>
+                                                        <button></button>
+                                                    </CopyToClipboard>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div className="timestamp">{moment(item.block_timestamp).fromNow()}</div>
+                                    
+                                </li>
+                            ))}
+                            </ul>
+                        </TabPane>
+                        <TabPane tabId="2">
                         <h2>Top Holders</h2>
                         <Table responsive>
                             <thead>
@@ -466,7 +536,7 @@ const TokenDashboard = ({topOwnersLoading, tokenPricesLoading}) => {
                             </tbody>
                             </Table>
                         </TabPane>
-                        <TabPane tabId="2">
+                        <TabPane tabId="3">
                             <h2>Holder Insights</h2>
                             {topOwnersLoading || !globalDataCache.token.topTokenOwners && <Skeleton />}
 
@@ -592,53 +662,6 @@ const TokenDashboard = ({topOwnersLoading, tokenPricesLoading}) => {
                                 </>
                             )}
                             
-                        </TabPane>
-                        <TabPane tabId="3">
-                            <h2>Activity</h2>
-                            <ul>
-                            {globalDataCache.token.tokenTransfers && globalDataCache.token.tokenTransfers.map(item => (
-                                <li className="transfer-item">
-                                
-                                        <div className={`category transfer`}>
-                                            <div className={`transfers`}>Transfer</div>
-                                        </div>
-                                        
-                                        <div className="label">
-                                            <div className="group">
-                                                <div className="heading">Amount</div>
-                                                <div className="value">{utilities.formatPriceNumber(Number(item.value_decimal).toFixed(2))}</div>
-                                            </div>
-
-                                            <div className="group">
-                                                <div className="heading">USD Value</div>
-                                                <div className="value">${utilities.formatPriceNumber(Number(Number(item.value_decimal)*globalDataCache.token.tokenPrice.usdPrice).toFixed(2))}</div>
-                                            </div>
-
-                                            <div className="group">
-                                                <div className="heading">From</div>
-                                                <div className="value">{item.from_address_label ? item.from_address_label : utilities.shortAddress(item.from_address)}</div>
-                                            </div>
-
-                                            <div className="group">
-                                                <div className="heading">To</div>
-                                                <div className="value">{item.to_address_label ? item.to_address_label : utilities.shortAddress(item.to_address)}</div>
-                                            </div>
-
-                                            <div className="group">
-                                                <div className="heading">Transaction</div>
-                                                <div className="value copy-container">{utilities.shortAddress(item.transaction_hash)}
-                                                    <CopyToClipboard valueToCopy={item.transaction_hash}>
-                                                        <button></button>
-                                                    </CopyToClipboard>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        <div className="timestamp">{moment(item.block_timestamp).fromNow()}</div>
-                                    
-                                </li>
-                            ))}
-                            </ul>
                         </TabPane>
                         <TabPane tabId="4">
                             <h2>Coming soon</h2>
