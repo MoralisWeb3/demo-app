@@ -39,7 +39,7 @@ function ZapperTimeline({ transactions }) {
                         </div>
 
                         {item.possible_spam && (
-                            <div class="spam-label">Spam</div>
+                            <div class="spam-label">Likely Spam</div>
                         )}
                     </div>
 

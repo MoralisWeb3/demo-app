@@ -230,7 +230,7 @@ function ZerionTimeline({ transactions }) {
                                     src={`https://api.dicebear.com/7.x/identicon/svg?backgroundColor=b6e3f4&seed=${item.to_address}`} 
                                     alt="profile"
                                     />
-                                    {item.from_address_label ? item.from_address_label : item.from_address ? utilities.shortAddress(item.from_address) :utilities.shortAddress(item.from_address)}
+                                    {item.to_address_label ? item.to_address_label : item.to_address ? utilities.shortAddress(item.to_address) :utilities.shortAddress(item.to_address)}
                                 </div>
                             </>
                         }

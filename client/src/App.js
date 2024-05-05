@@ -85,7 +85,7 @@ const Navigation = () => {
             <h1>Moralis Demo Project</h1>
               <p>Welcome to this Moralis Demo project! This is an open source project to demo the power of <a href="https://moralis.io?ref=demo-app" target="_blank">Moralis APIs</a>.</p>
               <p>Note: this app contains many early stage, beta or experimental features. As a result bugs are highly likely.</p>
-              <p>Check-out the code over at Github: <a href="https://github.com/MoralisWeb3/demo-app/tree/main" target="_blank">https://github.com/salisbury88/moralis-demo-app</a></p>
+              <p>Check-out the code over at Github: <a href="https://github.com/MoralisWeb3/demo-app/tree/main" target="_blank">https://github.com/MoralisWeb3/demo-app</a></p>
           </div>
           
         </div>
