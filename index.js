@@ -57,20 +57,14 @@ function validateChain(req, res, next) {
   next();
 }
 
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
-
-// if (process.env.NODE_ENV === 'production') {
-//   app.get('/*', async function(req,res,next) {
-//     try {
-//       return res.redirect('/');
-//     } catch(e) {
-//       next(e);
-//     }
-//   });
-// }
 
 const PORT = process.env.PORT || 3001;
 
