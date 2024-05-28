@@ -45,7 +45,7 @@ const HistoryAccordionItem = ({ item }) => {
                 <TransactionImage transaction={item} chain={globalDataCache.selectedChain} />
               </div>
               <div className="history-info">
-                <div className="label">{item.summary}</div>
+                <div className="label">{item.summary} {item.category === "contract interaction" ? item.method_label ? `: ${item.method_label}()` : `: unknown` : ''}</div>
                 {item.approvals && item.approvals.length > 0 && (
                   <div className="secondary-line">
                     Spender: {item.approvals[0].spender.address_label ? item.approvals[0].spender.address_label : item.approvals[0].spender.address}

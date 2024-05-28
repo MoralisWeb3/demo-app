@@ -62,15 +62,15 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-if (process.env.NODE_ENV === 'production') {
-  app.get('/*', async function(req,res,next) {
-    try {
-      return res.redirect('/');
-    } catch(e) {
-      next(e);
-    }
-  });
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.get('/*', async function(req,res,next) {
+//     try {
+//       return res.redirect('/');
+//     } catch(e) {
+//       next(e);
+//     }
+//   });
+// }
 
 const PORT = process.env.PORT || 3001;
 
