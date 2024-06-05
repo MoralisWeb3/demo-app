@@ -19,8 +19,12 @@ const NFT = ({ nft }) => {
                 {nft.last_sale && (
                     <>
                         <div className="sale-price">Bought for {nft.last_sale.price_formatted} ETH</div>
-                        <span className="usd-price">${nft.last_sale.usd_price}</span>
+                        <span className="usd-price">${nft.last_sale.usd_price_at_sale}</span>
                     </>
+                )}
+
+                {(nft.minter_address === nft.owner_of) && (
+                    <>Minted</>
                 )}
             </div>
             

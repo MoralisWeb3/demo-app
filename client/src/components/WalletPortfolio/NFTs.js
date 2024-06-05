@@ -258,7 +258,7 @@ const NFTs = () => {
                       {activeNFT.last_sale && (
                         <div className="nft-modal-content">
                             <div className="subtitle">Last Sale Details</div>
-                            <p>Last sold for {activeNFT.last_sale.price_formatted} ETH ({activeNFT.last_sale.usd_price})</p>
+                            <p>Last sold for {activeNFT.last_sale.price_formatted} ETH ({activeNFT.last_sale.usd_price_at_sale})</p>
 
                             <ul className="table-list">
                             <li>
@@ -267,7 +267,7 @@ const NFTs = () => {
                               </li> 
                               <li>
                                 <div className="left">Amount Paid (USD)</div>
-                                <div className="right">${activeNFT.last_sale.usd_price}</div>
+                                <div className="right">${activeNFT.last_sale.usd_price_at_sale}</div>
                               </li> 
                               <li>
                                 <div className="left">Transaction Hash</div>

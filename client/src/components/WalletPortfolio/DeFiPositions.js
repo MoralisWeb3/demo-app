@@ -222,7 +222,7 @@ const DeFiTokens = () => {
                                           (position_token.token_type !== "reward" || !position_token.token_type) && (
 
                                             <div>
-                                              {position_token.symbol}
+                                              {position_token.symbol} ({position_token.token_type})
                                             </div>
                                           )
                                         ))
@@ -233,7 +233,7 @@ const DeFiTokens = () => {
                                         {position.position.tokens.map(position_token => (
                                               (position_token.token_type !== "reward" || !position_token.token_type) && (
 
-                                          <div>{Number(position_token.balance_formatted).toFixed(4)}</div>
+                                          <div>{Number(position_token.balance_formatted).toFixed(4)} {position_token.usd_value > 0 ? `($${Number(position_token.usd_value).toFixed(2)})` : ''}</div>
                                           )
                                         ))}
                                       </div>

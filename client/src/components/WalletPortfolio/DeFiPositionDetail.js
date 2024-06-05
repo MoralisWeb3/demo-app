@@ -140,7 +140,7 @@ function DeFiPosition() {
                                             <div>
                                                 {position.tokens.map((token,index) =>(
                                                     <>
-                                                        <div>{token.name}</div>
+                                                        <div>{token.name} ({token.token_type})</div>
                                                     </>
                                                 ))}
                                             </div>
@@ -148,7 +148,7 @@ function DeFiPosition() {
                                             <div>
                                                 {position.tokens.map((token,index) =>(
                                                     <>
-                                                        <div>{Number(token.balance_formatted).toFixed(4)}</div>
+                                                        <div>{Number(token.balance_formatted).toFixed(4)} {token.usd_value > 0 ? `($${Number(token.usd_value).toFixed(2)})` : ''}</div>
                                                     </>
                                                 ))}
                                             </div>
@@ -237,8 +237,33 @@ function DeFiPosition() {
                                     </div>
                                 )}
 
+                                {position.position_details.share_of_pool && (
+                                    <ul className="table-list">
+                                        <li>
+                                            <div className="left">Share of Pool</div>
+                                            <div className="right">{position.position_details.share_of_pool}</div>
+                                        </li>
+                                        <li>
+                                            <div className="left">token0 liquidity</div>
+                                            <div className="right">{position.position_details.reserve0}</div>
+                                        </li>
+                                        <li>
+                                            <div className="left">token1 liquidity</div>
+                                            <div className="right">{position.position_details.reserve1}</div>
+                                        </li>
+                                        <li>
+                                            <div className="left">Pair Address</div>
+                                            <div className="right">{position.position_details.pair}</div>
+                                        </li>
+                                        <li>
+                                            <div className="left">Factory Address</div>
+                                            <div className="right">{position.position_details.factory}</div>
+                                        </li>
+                                    </ul>
+                                )}
 
-                                {!position.position_details.fee_tier && (
+
+                                {(!position.position_details.fee_tier && !position.position_details.share_of_pool) && (
                                     <ul className="table-list">
                                         <li>
                                             <div className="left">Annual Percentage Yield (APY) </div>
@@ -268,6 +293,8 @@ function DeFiPosition() {
                                         </li>
                                     </ul>
                                 )}
+
+                                
                                 
 
                                     
