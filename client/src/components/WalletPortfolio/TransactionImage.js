@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 // Custom hook to load an image with a timeout
 function useImageWithTimeout(url, placeholder, timeout = 5000) {
-  const [source, setSource] = useState({ src: url, error: false, loading: true });
+  const [source, setSource] = useState({
+    src: url,
+    error: false,
+    loading: true,
+  });
 
   useEffect(() => {
     let isMounted = true;
     const img = new Image();
 
     let timer = setTimeout(() => {
-      if (isMounted && source.loading) { // Only switch to placeholder if still loading
+      if (isMounted && source.loading) {
+        // Only switch to placeholder if still loading
         setSource({ src: placeholder, error: true, loading: false });
       }
     }, timeout);
@@ -46,7 +51,10 @@ const findImageUrl = (transaction, chain) => {
   if (transaction.nft_transfers?.length > 0) {
     for (let transfer of transaction.nft_transfers) {
       if (transfer.normalized_metadata?.image) {
-        return transfer.normalized_metadata.image.replace("ipfs://", "https://ipfs.io/ipfs/");
+        return transfer.normalized_metadata.image.replace(
+          "ipfs://",
+          "https://ipfs.io/ipfs/"
+        );
       }
     }
   }
@@ -72,6 +80,24 @@ const findImageUrl = (transaction, chain) => {
     }
   }
 
+  if (transaction?.contract_interactions?.approvals?.length > 0) {
+    return transaction.contract_interactions.approvals[0].token.token_logo;
+  }
+
+  if (transaction?.contract_interactions?.revokes?.length > 0) {
+    return transaction.contract_interactions.revokes[0].token.token_logo;
+  }
+
+  if (transaction?.contract_interactions?.set_all_approvals?.length > 0) {
+    return transaction.contract_interactions.set_all_approvals[0].token
+      .token_logo;
+  }
+
+  if (transaction?.contract_interactions?.set_revokes_all?.length > 0) {
+    return transaction.contract_interactions.set_revokes_all[0].token
+      .token_logo;
+  }
+
   // Default images for send/receive transactions
   if (transaction.category === "send" || transaction.category === "receive") {
     return `/images/${chain}-icon.png`;
@@ -83,17 +109,13 @@ const findImageUrl = (transaction, chain) => {
 
 // Component using the custom hook
 function TransactionImage({ transaction, chain }) {
-  const placeholderImage = '/images/nft-placeholder.svg';
+  const placeholderImage = "/images/nft-placeholder.svg";
   const imageUrl = findImageUrl(transaction, chain); // Determine the image URL based on the transaction
   const { src } = useImageWithTimeout(imageUrl, placeholderImage, 10000); // Include the placeholder image URL and timeout
 
-
   // Placeholder or fallback image
-  
 
-  return (
-    <img src={src} alt="Transaction" />
-  );
+  return <img src={src} alt="Transaction" />;
 }
 
 export default TransactionImage;
