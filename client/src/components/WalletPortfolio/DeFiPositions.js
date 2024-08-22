@@ -14,19 +14,6 @@ const DeFiTokens = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const formatAsUSD = (number) => {
-    if (number < 0.01 && number > 0) {
-      return "<$0.01";
-    }
-
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(number);
-  };
-
   const handleProtocolClick = (protocol) => {
     setGlobalDataCache((prevData) => ({
       ...prevData,
@@ -241,7 +228,7 @@ const DeFiTokens = () => {
                             <div className="position-count">
                               {protocol.positions} positions
                             </div>
-                            {protocol?.account_data.health_factor && (
+                            {protocol?.account_data?.health_factor && (
                               <div className="health-factor">
                                 <span class="health dot"></span>
                                 Health Factor:{" "}
@@ -252,7 +239,7 @@ const DeFiTokens = () => {
                                   : `n/a`}
                               </div>
                             )}
-                            {protocol?.account_data.net_apy && (
+                            {protocol?.account_data?.net_apy && (
                               <div className="health-factor">
                                 Net APY:{" "}
                                 {parseFloat(
@@ -367,7 +354,7 @@ const DeFiTokens = () => {
                           </div>
                         </ul>
 
-                        {protocol.total_projected_earnings_usd.daily && (
+                        {protocol?.total_projected_earnings_usd?.daily && (
                           <div className="projected">
                             <div className="projected-title">
                               Projected Earnings
@@ -377,7 +364,7 @@ const DeFiTokens = () => {
                                 <div className="wallet-card">
                                   <div className="heading">Daily</div>
                                   <div className="big-value">
-                                    {formatAsUSD(
+                                    {utilities.formatAsUSD(
                                       protocol.total_projected_earnings_usd
                                         .daily
                                     )}
@@ -388,7 +375,7 @@ const DeFiTokens = () => {
                                 <div className="wallet-card">
                                   <div className="heading">Weekly</div>
                                   <div className="big-value">
-                                    {formatAsUSD(
+                                    {utilities.formatAsUSD(
                                       protocol.total_projected_earnings_usd
                                         .weekly
                                     )}
@@ -399,7 +386,7 @@ const DeFiTokens = () => {
                                 <div className="wallet-card">
                                   <div className="heading">Monthly</div>
                                   <div className="big-value">
-                                    {formatAsUSD(
+                                    {utilities.formatAsUSD(
                                       protocol.total_projected_earnings_usd
                                         .monthly
                                     )}
@@ -410,7 +397,7 @@ const DeFiTokens = () => {
                                 <div className="wallet-card">
                                   <div className="heading">Yearly</div>
                                   <div className="big-value">
-                                    {formatAsUSD(
+                                    {utilities.formatAsUSD(
                                       protocol.total_projected_earnings_usd
                                         .yearly
                                     )}

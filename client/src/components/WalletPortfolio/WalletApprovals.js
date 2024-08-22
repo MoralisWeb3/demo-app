@@ -120,8 +120,7 @@ function WalletApprovals() {
                   <div className="wallet-card">
                     <div className="heading">USD At Risk</div>
                     <div className="big-value">
-                      $
-                      {utilities.formatPriceNumber(
+                      {utilities.formatAsUSD(
                         globalDataCache.approvals.totalUsdAtRisk
                       )}
                     </div>
@@ -171,7 +170,7 @@ function WalletApprovals() {
                     </div>
                     <div className="token-value">
                       <div className="price">
-                        ${Number(token.token.usd_at_risk).toFixed(2)}
+                        {utilities.formatAsUSD(token.token.usd_at_risk)}
                       </div>
                     </div>
                     <div className="token-value">

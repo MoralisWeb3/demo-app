@@ -1,7 +1,7 @@
 import express from "express";
 import fetch from "node-fetch";
 const API_KEY = process.env.API_KEY;
-const baseURL = "https://web3-api-elias.aws-prod-api-1.moralis.io/api/v2.2";
+const baseURL = "https://deep-index.moralis.io/api/v2.2";
 const router = express.Router();
 
 router.get("/api/wallet/defi", async function (req, res, next) {
