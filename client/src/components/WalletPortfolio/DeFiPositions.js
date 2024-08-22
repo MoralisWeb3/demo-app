@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useData } from '../../DataContext';
-import NavBar from '../Misc/NavBar';
-import Loader from '../Misc/Loader';
-import ChainDropDown from '../Misc/ChainDropDown';
-import TokenLogo from './TokenLogo';
-import ExternalLinkIcon from '../Misc/ExternalLinkIcon';
-import * as utilities from '../../utilities.js';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useData } from "../../DataContext";
+import NavBar from "../Misc/NavBar";
+import Loader from "../Misc/Loader";
+import ChainDropDown from "../Misc/ChainDropDown";
+import TokenLogo from "./TokenLogo";
+import ExternalLinkIcon from "../Misc/ExternalLinkIcon";
+import * as utilities from "../../utilities.js";
+import { Link, useNavigate } from "react-router-dom";
 
 const DeFiTokens = () => {
   const { globalDataCache, setGlobalDataCache } = useData();
@@ -14,55 +14,72 @@ const DeFiTokens = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const formatAsUSD = (number) => {
+    if (number < 0.01 && number > 0) {
+      return "<$0.01";
+    }
+
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(number);
+  };
+
   const handleProtocolClick = (protocol) => {
-    setGlobalDataCache(prevData => ({
+    setGlobalDataCache((prevData) => ({
       ...prevData,
       defiPosition: {
-        protocol
-      } 
+        protocol,
+      },
     }));
-    navigate(`/wallets/${globalDataCache.walletAddress}/defi/${protocol.protocol_id}`);
+    navigate(
+      `/wallets/${globalDataCache.walletAddress}/defi/${protocol.protocol_id}`
+    );
   };
 
   const fetchDeFi = (chain) => {
     setLoading(true);
     setError(null);
-    setGlobalDataCache(prevData => ({
+    setGlobalDataCache((prevData) => ({
       ...prevData,
       defi: null,
-      defiLoaded:false
+      defiLoaded: false,
     }));
-    fetch(`${process.env.REACT_APP_API_URL}/api/wallet/defi?chain=${chain}&wallet=${globalDataCache.walletAddress}`)
-      .then(response => {
-        if (!response.ok) throw new Error('Failed to fetch data');
+    fetch(
+      `${process.env.REACT_APP_API_URL}/api/wallet/defi?chain=${chain}&wallet=${globalDataCache.walletAddress}`
+    )
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to fetch data");
         return response.json();
       })
-      .then(fetchedData => {
+      .then((fetchedData) => {
         // Update globalDataCache with fetchedData
-        
-        setGlobalDataCache(prevData => ({
+
+        setGlobalDataCache((prevData) => ({
           ...prevData,
           defi: fetchedData,
-          defiLoaded:true
+          defiLoaded: true,
         }));
         setLoading(false);
-        if(fetchedData.unsupported) {
-          setError("Unsupported wallet.")
+        if (fetchedData.unsupported) {
+          setError("Unsupported wallet.");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error.message);
         setLoading(false);
       });
-  }
+  };
 
   const handleDropdownChange = (selectedValue) => {
-    setGlobalDataCache(prevData => ({
+    setGlobalDataCache((prevData) => ({
       ...prevData,
-      nftsLoaded:false,
-      tokensLoaded:false,
-      defiLoaded:false,
-      selectedChain:selectedValue
+      nftsLoaded: false,
+      tokensLoaded: false,
+      defiLoaded: false,
+      selectedChain: selectedValue,
     }));
     fetchDeFi(selectedValue);
   };
@@ -79,199 +96,337 @@ const DeFiTokens = () => {
   }, [globalDataCache]);
 
   useEffect(() => {
-    localStorage.setItem('selectedChain', globalDataCache.selectedChain);
-}, [globalDataCache.selectedChain]);
-
+    localStorage.setItem("selectedChain", globalDataCache.selectedChain);
+  }, [globalDataCache.selectedChain]);
 
   return (
     <>
       <NavBar />
 
       <div id="defi-page">
-      
         <div className="page-header">
           <h2>DeFi Positions</h2>
-          <ChainDropDown 
-            onChange={handleDropdownChange} 
+          <ChainDropDown
+            onChange={handleDropdownChange}
             chains={globalDataCache.chains}
             selectedChain={globalDataCache.selectedChain}
           />
         </div>
 
-        
-          {loading && <Loader />}
-          {error && <div className="text-red-500">{error}</div>}      
-          {/* Assuming globalDataCache.tokensData is an array */}
+        {loading && <Loader />}
+        {error && <div className="text-red-500">{error}</div>}
+        {/* Assuming globalDataCache.tokensData is an array */}
 
-
-          
-          {globalDataCache.defi && (
+        {globalDataCache.defi && (
           <>
-              <h3 className="sub-header">Wallet Summary</h3>
-              <div className="summary-section">
-                  <div className="row">
-                      <div className="col-lg-3">
-                          <div className="wallet-card">
-                              <div className="heading">Total Value</div>
-                              <div className="big-value">${globalDataCache.defi.protocols.total_usd_value ? utilities.formatPriceNumber(globalDataCache.defi.protocols.total_usd_value) : 0}</div>
-                          </div>
-                      </div>
-
-                      <div className="col-lg-3">
-                          <div className="wallet-card">
-                              <div className="heading">Active Protocols</div>
-                              <div className="big-value">{globalDataCache.defi.protocols.active_protocols}</div>
-                          </div>
-                      </div>
-
-                      <div className="col-lg-3">
-                          <div className="wallet-card">
-                              <div className="heading">Current Positions</div>
-                              <div className="big-value">{globalDataCache.defi.protocols.total_positions}</div>
-                          </div>
-                      </div>
-
-                      <div className="col-lg-3">
-                          <div className="wallet-card">
-                              <div className="heading">Unclaimed Rewards</div>
-                              <div className="big-value">${utilities.formatPriceNumber(globalDataCache.defi.protocols.total_unclaimed_usd_value)}</div>
-                          </div>
-                      </div>
-
-
-                  </div>
-              </div>
-
-
-              <h3 className="sub-header">Protocol Breakdown</h3>
-              <ul className="summary-protocols">
-
-                {globalDataCache.defi.protocols.protocols.map(protocol => (
-                  <li>
-                    <img src={protocol.protocol_logo} alt={protocol.protocol_name} />
-                    <div>
-                      <div className="protocol-title">{protocol.protocol_name}</div>
-                      <div className="protocol-value">{protocol.total_usd_value ? `$${utilities.formatPriceNumber(protocol.total_usd_value)}` : null}</div>
-                      <div className="position-count">{protocol.positions} positions</div>
+            <h3 className="sub-header">Wallet Summary</h3>
+            <div className="summary-section">
+              <div className="row">
+                <div className="col-lg-3">
+                  <div className="wallet-card">
+                    <div className="heading">Total Value</div>
+                    <div className="big-value">
+                      $
+                      {globalDataCache.defi.protocols.total_usd_value
+                        ? utilities.formatPriceNumber(
+                            globalDataCache.defi.protocols.total_usd_value
+                          )
+                        : 0}
                     </div>
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                </div>
 
-              {!loading && !error && globalDataCache.defi && globalDataCache.defi.totalDeFiPositions === 0 && (
-              <h5>No DeFi positions found. More protocols will be supported soon.</h5>
+                <div className="col-lg-3">
+                  <div className="wallet-card">
+                    <div className="heading">Active Protocols</div>
+                    <div className="big-value">
+                      {globalDataCache.defi.protocols.active_protocols}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-lg-3">
+                  <div className="wallet-card">
+                    <div className="heading">Current Positions</div>
+                    <div className="big-value">
+                      {globalDataCache.defi.protocols.total_positions}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-lg-3">
+                  <div className="wallet-card">
+                    <div className="heading">Unclaimed Rewards</div>
+                    <div className="big-value">
+                      $
+                      {utilities.formatPriceNumber(
+                        globalDataCache.defi.protocols.total_unclaimed_usd_value
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3 className="sub-header">Protocol Breakdown</h3>
+            <ul className="summary-protocols">
+              {globalDataCache.defi.protocols.protocols.map((protocol) => (
+                <li>
+                  <img
+                    src={protocol.protocol_logo}
+                    alt={protocol.protocol_name}
+                  />
+                  <div>
+                    <div className="protocol-title">
+                      {protocol.protocol_name}
+                    </div>
+                    <div className="protocol-value">
+                      {protocol.total_usd_value
+                        ? `$${utilities.formatPriceNumber(
+                            protocol.total_usd_value
+                          )}`
+                        : null}
+                    </div>
+                    <div className="position-count">
+                      {protocol.positions} positions
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {!loading &&
+              !error &&
+              globalDataCache.defi &&
+              globalDataCache.defi.totalDeFiPositions === 0 && (
+                <h5>
+                  No DeFi positions found. More protocols will be supported
+                  soon.
+                </h5>
               )}
 
+            <h3 className="sub-header">Wallet Positions</h3>
 
-<h3 className="sub-header">Wallet Positions</h3>
-
-              {globalDataCache.defi.defiPositions && globalDataCache.defi.defiPositions.length > 0 && (
+            {globalDataCache.defi.defiPositions &&
+              globalDataCache.defi.defiPositions.length > 0 && (
                 <div className="summary-positions">
-                  {globalDataCache.defi.protocols.protocols.map(protocol => (
+                  {globalDataCache.defi.protocols.protocols.map((protocol) => (
                     <>
-                      <div className="wallet-card" key={protocol.name_name} onClick={() => handleProtocolClick(protocol)}>
-                          <div className="protocol-details">
-                              <img src={protocol.protocol_logo} alt={protocol.protocol_name} />
-                              <div className="protocol-title">
-                                {protocol.protocol_name} {protocol.total_usd_value ? `- $${utilities.formatPriceNumber(protocol.total_usd_value)}` : null}
-
-                                {protocol.total_unclaimed_usd_value && (
-                                  <spam className="rewards-available">+${utilities.formatPriceNumber(protocol.total_unclaimed_usd_value)} Unclaimed Rewards</spam>
-                                )}
-                                <div className="position-count">{protocol.positions} positions</div>
+                      <div
+                        className="wallet-card"
+                        key={protocol.name_name}
+                        onClick={() => handleProtocolClick(protocol)}
+                      >
+                        <div className="protocol-details">
+                          <img
+                            src={protocol.protocol_logo}
+                            alt={protocol.protocol_name}
+                          />
+                          <div className="protocol-title">
+                            {protocol.protocol_name}{" "}
+                            {protocol.total_usd_value
+                              ? `- $${utilities.formatPriceNumber(
+                                  protocol.total_usd_value
+                                )}`
+                              : null}
+                            {protocol.total_unclaimed_usd_value && (
+                              <spam className="rewards-available">
+                                +$
+                                {utilities.formatPriceNumber(
+                                  protocol.total_unclaimed_usd_value
+                                )}{" "}
+                                Unclaimed Rewards
+                              </spam>
+                            )}
+                            <div className="position-count">
+                              {protocol.positions} positions
+                            </div>
+                            {protocol?.account_data.health_factor && (
+                              <div className="health-factor">
+                                <span class="health dot"></span>
+                                Health Factor:{" "}
+                                {protocol?.account_data.health_factor
+                                  ? protocol?.account_data.health_factor > 10
+                                    ? "> 10"
+                                    : protocol?.account_data.health_factor
+                                  : `n/a`}
                               </div>
-                              
-                                <Link to={protocol.protocol_url} target="_blank">
-                                  <button className="btn btn-outline icon btn-sm">Manage Positions <ExternalLinkIcon width="15" /></button>
-                                </Link>
+                            )}
+                            {protocol?.account_data.net_apy && (
+                              <div className="health-factor">
+                                Net APY:{" "}
+                                {parseFloat(
+                                  protocol?.account_data.net_apy
+                                ).toFixed(2)}
+                                %
+                              </div>
+                            )}
                           </div>
 
+                          <Link to={protocol.protocol_url} target="_blank">
+                            <button className="btn btn-outline icon btn-sm">
+                              Manage Positions <ExternalLinkIcon width="15" />
+                            </button>
+                          </Link>
+                        </div>
 
-                          <ul className="defi-list">
-                            <div className="position-detail">
+                        <ul className="defi-list">
+                          <div className="position-detail">
                             <li className="header-row">
                               <div>Token</div>
                               <div></div>
                               <div>Token Balances</div>
                               <div>Position Type</div>
                               <div>Position Value</div>
+                              <div>APY</div>
                             </li>
-                            
 
-                            {
-                              globalDataCache.defi.defiPositions.filter(position => position.protocol_id === protocol.protocol_id)
-                                .map((position, index) => (
-                                  <li key={index}>
-                                    <>
-                                      <div>
-                                        {position.position.tokens.map(position_token => (
-                                              (position_token.token_type !== "reward" || !position_token.token_type) && (
-                                                <>
-                                                  <TokenLogo tokenImage={position_token.logo} tokenName={position_token.name}/>
-                                                </>
-                                                
-
-                                                
-                                            
+                            {globalDataCache.defi.defiPositions
+                              .filter(
+                                (position) =>
+                                  position.protocol_id === protocol.protocol_id
+                              )
+                              .map((position, index) => (
+                                <li key={index}>
+                                  <>
+                                    <div>
+                                      {position.position.tokens.map(
+                                        (position_token) =>
+                                          (position_token.token_type !==
+                                            "reward" ||
+                                            !position_token.token_type) && (
+                                            <>
+                                              <TokenLogo
+                                                tokenImage={position_token.logo}
+                                                tokenName={position_token.name}
+                                              />
+                                            </>
                                           )
-                                        ))}
-                                      </div>
-                                      <div>
-                                      {
-                                        position.position.tokens.map(position_token => (
-                                          (position_token.token_type !== "reward" || !position_token.token_type) && (
-
+                                      )}
+                                    </div>
+                                    <div>
+                                      {position.position.tokens.map(
+                                        (position_token) =>
+                                          (position_token.token_type !==
+                                            "reward" ||
+                                            !position_token.token_type) && (
                                             <div>
-                                              {position_token.symbol} ({position_token.token_type})
+                                              {position_token.symbol} (
+                                              {position_token.token_type})
                                             </div>
                                           )
-                                        ))
-                                      }
-                                      </div>
-
-                                      <div className="token-balance">
-                                        {position.position.tokens.map(position_token => (
-                                              (position_token.token_type !== "reward" || !position_token.token_type) && (
-
-                                          <div>{Number(position_token.balance_formatted).toFixed(4)} {position_token.usd_value > 0 ? `($${Number(position_token.usd_value).toFixed(2)})` : ''}</div>
-                                          )
-                                        ))}
-                                      </div>
-
-                                      
-
-                                    </>
-                                    
-
-                                    
-
-                                    <div>
-                                      {position.position.label}
-                                    </div>
-                                    <div className="value">
-                                    ${utilities.formatPriceNumber(Number(position.position.balance_usd))}
-                                    </div>
-
-                                      {position.position.total_unclaimed_usd_value && (
-                                        <div className="rewards-available">Claim Rewards</div>
                                       )}
-                                    
-                                  </li>
-                                ))
-                            }
+                                    </div>
+
+                                    <div className="token-balance">
+                                      {position.position.tokens.map(
+                                        (position_token) =>
+                                          (position_token.token_type !==
+                                            "reward" ||
+                                            !position_token.token_type) && (
+                                            <div>
+                                              {Number(
+                                                position_token.balance_formatted
+                                              ).toFixed(4)}{" "}
+                                              {position_token.usd_value > 0
+                                                ? `($${Number(
+                                                    position_token.usd_value
+                                                  ).toFixed(2)})`
+                                                : ""}
+                                            </div>
+                                          )
+                                      )}
+                                    </div>
+                                  </>
+
+                                  <div>{position.position.label}</div>
+                                  <div className="value">
+                                    $
+                                    {utilities.formatPriceNumber(
+                                      Number(position.position.balance_usd)
+                                    )}
+                                  </div>
+
+                                  <div>
+                                    {position.position?.position_details?.apy
+                                      ? `${parseFloat(
+                                          position.position?.position_details
+                                            ?.apy
+                                        ).toFixed(2)}%`
+                                      : "n/a"}
+                                  </div>
+
+                                  {position.position
+                                    .total_unclaimed_usd_value && (
+                                    <div className="rewards-available">
+                                      Claim Rewards
+                                    </div>
+                                  )}
+                                </li>
+                              ))}
                           </div>
                         </ul>
+
+                        {protocol.total_projected_earnings_usd.daily && (
+                          <div className="projected">
+                            <div className="projected-title">
+                              Projected Earnings
+                            </div>
+                            <div className="row">
+                              <div className="col-lg-3">
+                                <div className="wallet-card">
+                                  <div className="heading">Daily</div>
+                                  <div className="big-value">
+                                    {formatAsUSD(
+                                      protocol.total_projected_earnings_usd
+                                        .daily
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-lg-3">
+                                <div className="wallet-card">
+                                  <div className="heading">Weekly</div>
+                                  <div className="big-value">
+                                    {formatAsUSD(
+                                      protocol.total_projected_earnings_usd
+                                        .weekly
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-lg-3">
+                                <div className="wallet-card">
+                                  <div className="heading">Monthly</div>
+                                  <div className="big-value">
+                                    {formatAsUSD(
+                                      protocol.total_projected_earnings_usd
+                                        .monthly
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-lg-3">
+                                <div className="wallet-card">
+                                  <div className="heading">Yearly</div>
+                                  <div className="big-value">
+                                    {formatAsUSD(
+                                      protocol.total_projected_earnings_usd
+                                        .yearly
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </>
                   ))}
                 </div>
               )}
-
           </>
-          )}
-
-        
-        
+        )}
       </div>
     </>
   );
