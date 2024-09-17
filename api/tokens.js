@@ -145,7 +145,7 @@ router.get("/api/token/:tokenAddress", async function (req, res, next) {
     );
 
     const results = await Promise.all(
-      topTenHolders.map((owner) => fetchDataForOwner(owner))
+      topTenHolders.map((owner) => fetchDataForOwner(owner, tokenAddress))
     );
 
     let tokenOccurrences = results.reduce((acc, holder) => {
@@ -302,9 +302,10 @@ router.get("/api/token/:tokenAddress/prices", async function (req, res, next) {
   }
 });
 
-async function fetchDataForOwner(owner) {
+async function fetchDataForOwner(owner, tokenAddress) {
   let balanceData = [];
   let networthData = 0;
+  let tokenPNL = 0;
 
   if (owner.owner_address.indexOf("0x00000000000000000000000000000") > -1) {
     return { owner, balanceData, networthData };
@@ -368,7 +369,35 @@ async function fetchDataForOwner(owner) {
     );
   }
 
-  return { owner, balanceData, networthData };
+  try {
+    const walletTokenPNL = await fetch(
+      `${baseURL}/wallets/${owner.owner_address}/profitability?token_addresses=${tokenAddress}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "X-API-Key": API_KEY,
+        },
+      }
+    );
+
+    // Process walletTokenPNL only if OK, otherwise keep tokenPNL as 0
+    if (walletTokenPNL.ok) {
+      const rawTokenPNL = await walletTokenPNL.json();
+      tokenPNL = rawTokenPNL.result;
+    } else {
+      console.log(`Failed to fetch PNL for owner: ${owner.owner_address}`);
+      console.log(walletTokenPNL.statusText);
+      tokenPNL = "0";
+    }
+  } catch (error) {
+    console.error(
+      `Error fetching networth for owner: ${owner.owner_address}`,
+      error
+    );
+  }
+
+  return { owner, balanceData, networthData, tokenPNL };
 }
 
 router.get("/api/wallet/tokens", async function (req, res, next) {

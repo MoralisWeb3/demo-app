@@ -109,7 +109,14 @@ const findImageUrl = (transaction, chain) => {
 
 // Component using the custom hook
 function TransactionImage({ transaction, chain }) {
-  const placeholderImage = "/images/nft-placeholder.svg";
+  let placeholderImage = "/images/nft-placeholder.svg";
+
+  for (let transfer of transaction.nft_transfers || []) {
+    if (transfer.collection_logo) {
+      placeholderImage = transfer.collection_logo;
+    }
+  }
+
   const imageUrl = findImageUrl(transaction, chain); // Determine the image URL based on the transaction
   const { src } = useImageWithTimeout(imageUrl, placeholderImage, 10000); // Include the placeholder image URL and timeout
 

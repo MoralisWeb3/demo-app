@@ -249,6 +249,89 @@ h3.sub-header {
   }
 }
 
+.explore-title {
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.entity-header {
+  display: flex;
+  align-items: center;
+  h1 {
+    margin-bottom: 0px;
+    display: flex;
+    align-items: center;
+
+    span.entity-type {
+      font-size: 0.8rem;
+      background: #008067;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: 500;
+      margin-left: 10px;
+    }
+  }
+
+  img {
+    width: 80px;
+    margin-right: 15px;
+  }
+}
+
+.entity-address-item {
+  img {
+    margin-right: 10px;
+    border-radius: 6px;
+  }
+}
+
+.search-box {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: left;
+  background: #0a2146;
+  margin-top: 3px;
+  border-radius: 7px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  hr {
+    color: #213f70;
+  }
+  h5 {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    padding: 15px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .search-results {
+    p {
+      font-size: 0.9rem !important;
+      opacity: 0.5;
+      padding: 5px 15px 0;
+    }
+  }
+
+  .search-item {
+    padding: 10px 15px;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      background: #006eff;
+    }
+    img {
+      margin-right: 8px;
+      border-radius: 50px;
+    }
+  }
+}
+
 #defi-page {
   max-width: 1000px;
   margin: 0 auto;
@@ -417,6 +500,8 @@ h3.sub-header {
 }
 
 #wallet-container {
+  position: relative;
+
   .divider {
     margin-top: 40px;
     font-weight: 600;
@@ -1261,6 +1346,32 @@ ul.flex-table {
     }
   }
 }
+
+.category-card {
+  background: #01102e;
+  margin: 10px;
+  padding: 15px 30px;
+  text-align: left;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  .entity-count {
+    font-size: 0.9rem;
+    font-weight: 400;
+    opacity: 0.5;
+  }
+  img {
+    margin-right: 10px;
+    width: 50px;
+    border-radius: 500px;
+  }
+}
+
+.category-card.entity-card {
+  display: flex;
+  align-items: center;
+}
+
 #history-page {
   .zerion {
     font-size: 0.9rem;
@@ -1603,6 +1714,17 @@ ul.flex-table {
 
   .col-lg-8 {
     padding-left: 30px;
+  }
+
+  .owner-details {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+
+    img {
+      border-radius: 6px;
+      margin-right: 10px;
+    }
   }
 
   .token-top {

@@ -174,7 +174,9 @@ function WalletApprovals() {
                       </div>
                     </div>
                     <div className="token-value">
-                      {token.spender.address_label
+                      {token.spender.entity
+                        ? token.spender.entity
+                        : token.spender.address_label
                         ? token.spender.address_label
                         : utilities.shortAddress(token.spender.address)}
                     </div>

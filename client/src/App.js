@@ -21,6 +21,9 @@ import NFTMarketplace from "./components/NFTMarketplace/NFTMarketplace";
 import NFTCollection from "./components/NFTMarketplace/NFTCollection";
 import NFTDetail from "./components/NFTMarketplace/NFTDetail";
 import MarketData from "./components/MarketData/MarketData";
+import EntitySearch from "./components/Entities/EntitySearch";
+import EntityDashboard from "./components/Entities/EntityDashboard";
+import EntityCategory from "./components/Entities/EntityCategory";
 import SpamChecker from "./components/SpamChecker/SpamChecker";
 import { DataProvider, useData } from "./DataContext";
 import "./custom.scss";
@@ -149,6 +152,24 @@ const Navigation = () => {
           </div>
 
           <div className="col-lg-4 equal">
+            <Link className="demo-link" to="/entities/">
+              <div className="wallet-card">
+                <div
+                  className="card-img"
+                  style={{
+                    backgroundImage: "url('/images/entities.jpg')",
+                  }}
+                ></div>
+                <div className="demo-title">Entities & Dapps</div>
+                <p>
+                  Search and discover entities, dapps and related addresses for
+                  entities such as BlackRock, Coinbase, Kraken and more.
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="col-lg-4 equal">
             <Link className="demo-link" to="/marketplace/">
               <div className="wallet-card">
                 <div
@@ -254,6 +275,10 @@ function App() {
 
           <Route path="/tokens/" element={<TokenViewer />} />
           <Route path="/tokens/:tokenAddress" element={<TokenDashboard />} />
+
+          <Route path="/entities" element={<EntitySearch />} />
+          <Route path="/entities/:id" element={<EntityDashboard />} />
+          <Route path="/entities/categories/:id" element={<EntityCategory />} />
 
           <Route path="/marketplace" element={<NFTMarketplace />} />
           <Route path="/nfts/:collection" element={<NFTCollection />} />

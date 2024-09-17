@@ -9,6 +9,7 @@ import defiApi from "./api/defi.js";
 import pnlApi from "./api/pnl.js";
 import approvalsApi from "./api/approvals.js";
 import spamApi from "./api/spamCheck.js";
+import entitiesApi from "./api/entities.js";
 import path from "path";
 const __dirname = path.resolve();
 import { rateLimit } from "express-rate-limit";
@@ -39,6 +40,8 @@ app.use("/", defiApi);
 app.use("/", pnlApi);
 app.use("/", approvalsApi);
 app.use("/", spamApi);
+app.use("/", entitiesApi);
+
 const chains = [
   "eth",
   "polygon",

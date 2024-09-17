@@ -76,10 +76,14 @@ const HistoryAccordionItem = ({ item }) => {
               {item.category === "approve" && (
                 <div className="secondary-line">
                   Spender:{" "}
-                  {item.contract_interactions.approvals
-                    ? item.contract_interactions.approvals[0].spender.address
-                    : item.contract_interactions.set_approvals_all[0].spender
-                        .address}
+                  {item.contract_interactions.approvals?.[0]?.spender?.entity ||
+                    item.contract_interactions.approvals?.[0]?.spender
+                      ?.address ||
+                    item.contract_interactions.set_approvals_all?.[0]?.operator
+                      ?.entity ||
+                    item.contract_interactions.set_approvals_all?.[0]?.operator
+                      ?.address ||
+                    "Unknown"}
                 </div>
               )}
 
