@@ -1,0 +1,433 @@
+.col-lg-9.main-col {
+  padding: 0;
+}
+
+.main-col .tab-content {
+  padding: 0;
+  min-height: 50vh;
+}
+
+.chart-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%; /* Maintain full height */
+  max-height: 500px;
+  transition: width 0.3s ease-in-out; /* Smooth transition */
+  border-bottom: 1px solid #1a3657;
+  border-top: 1px solid #1a3657;
+  background: #000d26;
+}
+
+.mini-chart {
+  position: fixed;
+  bottom: -300px;
+  left: 25px;
+  width: 380px; /* Mini chart width */
+  height: 260px; /* Mini chart height */
+  z-index: 999;
+  background: #000d26; /* Optional background for visibility */
+  border: 1px solid #1a3657;
+  border-radius: 3px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(0px); /* Slightly shifted down */
+  pointer-events: none; /* Disable interactions when hidden */
+  transition: all 0.3s ease-in-out;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.mini-chart.visible {
+  transform: translateY(0); /* Slide into view */
+  bottom: 40px; /* Positioned inside the viewport */
+  pointer-events: all; /* Enable interactions */
+  transition: all 0.3s ease-in-out;
+}
+
+.chart-container .chart {
+  flex-grow: 1;
+  height: 100%;
+  transition: width 0.3s ease-in-out; /* Smooth transition */
+  display: flex;
+  position: relative;
+}
+
+.chart-container canvas {
+  flex: 1;
+}
+
+.chart-container.with-analysis .chart {
+  width: 70%;
+}
+
+.expanded-row-content {
+  background: #000a1e;
+}
+
+.chart-container .ai-ta {
+  height: 100%;
+  border-left: 1px solid #1a3656;
+  overflow-y: auto; /* Make the panel scrollable */
+  padding: 10px;
+  position: relative;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out; /* Slide-in animation */
+}
+
+.chart-container .ai-ta h2 {
+  margin-top: 0;
+}
+
+.chart-container.with-analysis .ai-ta {
+  transform: translateX(0); /* Slide in */
+  width: 30%;
+}
+
+.chart-container:not(.with-analysis) .ai-ta {
+  transform: translateX(100%); /* Slide out */
+}
+
+.filter-options {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 8px 15px;
+  margin: 0 10px;
+  border-radius: 8px;
+}
+
+.filter-options button {
+  font-size: 0.8rem;
+}
+
+.filter-options span {
+  margin-right: 10px;
+}
+button {
+  padding: 8px 10px;
+  border: 1px solid #1a3657;
+  background-color: #000d26;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+  color: #769cb0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background-color: #03142c;
+}
+
+tr.primary-row {
+  border-bottom: 1px solid #131f34;
+}
+
+#core-tabs {
+  position: sticky;
+  top: 0;
+  background: #000d26;
+}
+
+.trending-bar-wrapper {
+  overflow: hidden; /* Hide content outside the container */
+  color: white;
+  background: #000d26;
+  font-weight: 600;
+  width: 100%; /* Full width of the container */
+  position: relative;
+  border-bottom: 1px solid #1a3656; /* Optional: Add a border for styling */
+  padding: 5px 0;
+}
+
+.trending-bar {
+  display: flex; /* Ensure list items are inline */
+  gap: 20px; /* Add spacing between items */
+  animation: slide 30s linear infinite; /* Infinite sliding animation */
+  list-style: none; /* Remove default bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.trending-bar:hover {
+  animation-play-state: paused;
+}
+
+.trending-bar li {
+  display: flex;
+  align-items: center; /* Vertically center content */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.rank {
+  font-weight: bold;
+  margin-right: 4px;
+  font-size: 0.9rem;
+}
+
+img.logo {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 200px;
+  margin-right: 2px;
+}
+
+.symbol {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.price {
+  font-size: 14px;
+}
+
+.price span {
+  color: #4ce666; /* Green for positive percentages */
+  margin-left: 5px;
+}
+
+/* Animation keyframes for sliding */
+@keyframes slide {
+  0% {
+    transform: translateX(0); /* Start fully visible on the left */
+  }
+  100% {
+    transform: translateX(-100%); /* Move left until the end */
+  }
+}
+
+/* Container for the chevrons */
+.chevron-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px; /* Space between chevrons */
+  margin-right: 10px;
+}
+
+/* Base styles for the chevrons */
+.chevron {
+  width: 20px;
+  height: 20px;
+  clip-path: polygon(
+    50% 0%,
+    100% 50%,
+    50% 100%,
+    40% 100%,
+    80% 50%,
+    40% 0%,
+    50% 0%
+  );
+  background-color: #4ce666; /* Primary color for the chevron */
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.chevron-container.out .chevron {
+  background-color: #e64c4c; /* Primary color for the chevron */
+}
+
+/* Add animation delay for staggered pulsing */
+.chevron:nth-child(1) {
+  animation-delay: 0s;
+}
+.chevron:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.chevron:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+/* Animation for pulsing */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.flow {
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.02rem;
+}
+
+.flow-container {
+  display: flex;
+  align-items: center;
+}
+
+.flow-container img {
+  width: 50px;
+  border-radius: 200px;
+}
+
+.flow-item .traders {
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.02rem;
+}
+
+.flow-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+}
+
+ul.mini-token-list {
+  margin-bottom: 0;
+}
+.mini-token-list li {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #1a3657;
+  padding: 5px 0;
+}
+
+.mini-token-list li:last-of-type {
+  border-bottom: none;
+}
+
+.mini-token-list li .token-balance {
+  margin-left: auto;
+}
+.mini-token-list li img {
+  width: 20px;
+  margin-right: 5px;
+  border-radius: 100px;
+}
+
+.secondary-row .token-value {
+  margin-left: auto;
+}
+
+.secondary-row .token-symbol {
+  width: 30%;
+}
+.wallet-card.secondary-row {
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.expanded-row-content {
+  background: #000a1e;
+  border-left: 5px solid #0d6efd;
+  padding-left: 50px !important;
+  border-bottom: 1px solid #131f34;
+}
+
+.expanded-row-content .swap-item {
+  background: transparent;
+  font-size: 0.9rem;
+}
+
+.expanded-row-content .swap-item .swap-summary {
+  margin-right: 5px;
+}
+.expanded-row-content .swap-item img {
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+.expanded-row-content .swap-item.buy,
+.expanded-row-content .swap-item.sell {
+  color: white !important;
+}
+
+.expanded-row-content .swap-item .swap-type {
+  margin-right: 10px;
+}
+
+li.feed-item.swap-item {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  border: none;
+  border-bottom: 1px solid #1a3656;
+  margin: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+li.feed-item.swap-item .swap-date {
+  font-size: 0.9rem;
+}
+
+/* Sidebar Styles */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  background: #000e26;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1050;
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.side-menu h5 {
+  margin-top: 50px;
+}
+
+.menu-content {
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Modal Overlay Styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  z-index: 1049;
+}
+
+.overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mini-history .history-type {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.02rem;
+  background: #022259;
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.mini-history li {
+  border-bottom: 1px solid #1a3657;
+  padding: 5px 0;
+}

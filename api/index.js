@@ -7,6 +7,249 @@ const API_KEY = process.env.API_KEY;
 const baseURL = "https://deep-index.moralis.io/api/v2.2";
 const router = express.Router();
 
+const tokens = [
+  {
+    symbol: "PEPE",
+    address: "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+    pair: "0xA43fe16908251ee70EF74718545e4FE6C5cCEc9f",
+  },
+  {
+    symbol: "SPX6900",
+    address: "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
+    pair: "0x52c77b0cb827afbad022e6d6caf2c44452edbc39",
+  },
+  {
+    symbol: "DOGE",
+    address: "0x1121AcC14c63f3C872BFcA497d10926A6098AAc5",
+    pair: "0x308c6fbd6a14881af333649f17f2fde9cd75e2a6",
+  },
+  {
+    symbol: "MOG",
+    address: "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+    pair: "0xc2eab7d33d3cb97692ecb231a5d0e4a649cb539d",
+  },
+  {
+    symbol: "GOAT",
+    address: "0x666f5aeB760DA6D66e5346eb53898270dfcff366",
+    pair: "0x0afa28f97125f33ac5694a51f9c0554da1026d1e",
+  },
+  {
+    symbol: "BITCOIN",
+    address: "0x72e4f9F808C49A2a61dE9C5896298920Dc4EEEa9",
+    pair: "0x0c30062368eefb96bf3ade1218e685306b8e89fa",
+  },
+];
+
+const savedWallets = [
+  {
+    name: "FLOKI #1 Top Trader",
+    address: "0x7fe747cbda55e7b6461347988acef323d0f847cb",
+  },
+  {
+    name: "PEPE Whale Trader",
+    address: "0x25cd302e37a69d70a6ef645daea5a7de38c66e2a",
+  },
+];
+
+router.get("/api/trending-feed", async function (req, res, next) {
+  try {
+    const fromDateOHLC = new Date(
+      Date.now() - 24 * 60 * 60 * 1000
+    ).toISOString(); // 24 hours ago
+    const usdValue = 5000;
+
+    const fetchWithErrorHandling = async (
+      url,
+      tokenSymbol = "",
+      endpointType = ""
+    ) => {
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "X-API-Key": API_KEY,
+          },
+        });
+        if (!response.ok) {
+          throw new Error(
+            `Error fetching ${endpointType} for ${
+              tokenSymbol || "unknown token"
+            }: ${response.status} ${response.statusText}`
+          );
+        }
+        return await response.json();
+      } catch (error) {
+        console.error(
+          `Failed to fetch URL: ${url} for ${endpointType} (${
+            tokenSymbol || "unknown token"
+          })`,
+          error
+        );
+        return { result: [] };
+      }
+    };
+
+    // Step 1: Prepare Token and Wallet Requests
+    const tokenRequests = tokens.flatMap((token) => [
+      `${baseURL}/erc20/${token.address}/swaps?limit=10`,
+      `${baseURL}/erc20/${token.address}/owners`,
+      `${baseURL}/erc20/${token.address}/top-gainers`,
+      `${baseURL}/pairs/${
+        token.pair
+      }/ohlcv?timeframe=1h&currency=usd&fromDate=${fromDateOHLC}&toDate=${new Date().toISOString()}`,
+      `${baseURL}/erc20/${token.address}/price?include=percent_change`,
+    ]);
+
+    const savedWalletUrls = savedWallets.map(
+      (address) => `${baseURL}/wallets/${address.address}/swaps?limit=10`
+    );
+
+    // Step 2: Fetch All Data in Parallel
+    const [tokenResponses, savedWalletResponses] = await Promise.all([
+      Promise.all(
+        tokenRequests.map((url, index) =>
+          fetchWithErrorHandling(
+            url,
+            tokens[Math.floor(index / 5)]?.symbol,
+            index % 5 === 0
+              ? "swaps"
+              : index % 5 === 1
+              ? "owners"
+              : index % 5 === 2
+              ? "top-gainers"
+              : index % 5 === 3
+              ? "ohlcv"
+              : "price"
+          )
+        )
+      ),
+      Promise.all(savedWalletUrls.map((url) => fetchWithErrorHandling(url))),
+    ]);
+
+    // Step 3: Process Token Data
+    const tokenData = tokens.map((token, index) => {
+      const swaps = tokenResponses[index * 5]?.result || [];
+      const owners = tokenResponses[index * 5 + 1]?.result || [];
+      const topGainers = tokenResponses[index * 5 + 2]?.result || [];
+      const ohlcv = tokenResponses[index * 5 + 3]?.result || [];
+      const priceResponse = tokenResponses[index * 5 + 4] || {};
+
+      const price = {
+        usdPrice: priceResponse.usdPrice || null,
+        percentChange24h: priceResponse["24hrPercentChange"] || null,
+        tokenName: priceResponse.tokenName || null,
+        tokenSymbol: priceResponse.tokenSymbol || null,
+        tokenLogo: priceResponse.tokenLogo || null,
+      };
+
+      return {
+        ...token,
+        swaps,
+        owners,
+        topGainers,
+        ohlcv,
+        price,
+      };
+    });
+
+    // Step 4: Label Transactions
+    const labeledTransactions = new Map();
+
+    const labelTransaction = (tx, type, tokenSymbol) => {
+      const hash = tx.transactionHash;
+      const existing = labeledTransactions.get(hash);
+
+      const typePriority = {
+        largeTrade: 1,
+        smartMoney: 2,
+        whaleMovement: 3,
+        savedWalletActivity: 4,
+      };
+
+      if (!existing || typePriority[type] < typePriority[existing.type]) {
+        labeledTransactions.set(hash, { ...tx, type, token: tokenSymbol });
+      }
+    };
+
+    // Step 4a: Large Trades
+    tokenData.forEach((token) => {
+      const tokenAddress = token.address.toLowerCase();
+      token.swaps.forEach((tx) => {
+        const baseToken = tx.baseToken?.toLowerCase();
+        const quoteToken = tx.quoteToken?.toLowerCase();
+        // Only label as "largeTrade" if the token matches
+        if (
+          tx.totalValueUsd > usdValue &&
+          (baseToken === tokenAddress || quoteToken === tokenAddress)
+        ) {
+          labelTransaction(tx, "largeTrade", token.symbol);
+        }
+      });
+    });
+
+    // Step 4b: Smart Money
+    const traderUrls = tokenData.flatMap((token) =>
+      token.topGainers
+        .slice(0, 8)
+        .map((trader) => `${baseURL}/wallets/${trader.address}/swaps?limit=5`)
+    );
+    const traderSwaps = await Promise.all(
+      traderUrls.map((url) => fetchWithErrorHandling(url))
+    );
+
+    traderSwaps.forEach((response, index) => {
+      const trades = response.result || [];
+      const token = tokenData[Math.floor(index / 8)];
+      trades.forEach((tx) => labelTransaction(tx, "smartMoney", token.symbol));
+    });
+
+    // Step 4c: Whale Movements
+    const holderUrls = tokenData.flatMap((token) =>
+      token.owners
+        .slice(0, 2)
+        .map(
+          (holder) => `${baseURL}/wallets/${holder.owner_address}/swaps?limit=5`
+        )
+    );
+    const holderSwaps = await Promise.all(
+      holderUrls.map((url) => fetchWithErrorHandling(url))
+    );
+
+    holderSwaps.forEach((response, index) => {
+      const trades = response.result || [];
+      const token = tokenData[Math.floor(index / 2)];
+      trades.forEach((tx) =>
+        labelTransaction(tx, "whaleMovement", token.symbol)
+      );
+    });
+
+    // Step 4d: Saved Wallet Activity
+    savedWalletResponses.forEach((response, index) => {
+      const trades = response.result || [];
+      const walletAddress = savedWallets[index].address;
+
+      trades.forEach((trade) =>
+        labelTransaction(trade, "savedWalletActivity", walletAddress)
+      );
+    });
+
+    // Step 5: Convert Map to Array and Sort
+    const sortedTransactions = Array.from(labeledTransactions.values()).sort(
+      (a, b) => new Date(b.blockTimestamp) - new Date(a.blockTimestamp)
+    );
+
+    return res.status(200).json({
+      sortedTransactions,
+      tokenPrices: tokenData.map(({ symbol, price }) => ({ symbol, price })),
+      tokenData,
+      savedWallets,
+    });
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.get("/api/market-data", async function (req, res, next) {
   try {
     const urls = [
@@ -81,6 +324,8 @@ router.get("/api/market-data/top-erc20", async function (req, res, next) {
     );
 
     const [top_tokens] = await Promise.all(fetchPromises);
+
+    top_tokens = top_tokens ? top_tokens : [];
 
     return res.status(200).json({
       top_tokens,

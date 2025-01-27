@@ -1,0 +1,45 @@
+li.swap-item {
+  background: #03142c;
+  padding: 15px 0;
+  border-radius: 15px;
+  border-radius: 0;
+  border-bottom: 1px solid #0f264d;
+}
+
+.usd-amount {
+  color: #61f887;
+}
+
+.swap-type {
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.swap-item.buy .swap-type {
+  color: #61f887;
+  background: #002810;
+}
+.swap-item.sell .swap-type {
+  color: #f86161;
+  background: #280000;
+}
+
+.swap-item.buy .swapped-for {
+  color: #f86161;
+}
+
+.swap-item.sell .swapped-for {
+  color: #61f887;
+}
+
+.swap-line {
+  display: flex;
+  align-items: center;
+}
+
+.swap-date {
+  margin-left: auto;
+}

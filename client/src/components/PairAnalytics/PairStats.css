@@ -1,0 +1,465 @@
+body {
+  -webkit-font-smoothing: antialiased; /* For WebKit browsers */
+  -moz-osx-font-smoothing: grayscale; /* For macOS Firefox */
+  text-rendering: optimizeLegibility; /* Improves font kerning and ligatures */
+}
+
+.token-name {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background: #03142c;
+  margin: 6px;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.token-name img {
+  width: 50px;
+  height: 50px;
+  border-radius: 150px;
+  margin-right: 10px;
+}
+.token-name h1 {
+  line-height: 1;
+}
+.token-name .pair-details {
+  font-weight: 600;
+}
+
+.pair-exchange {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+.pair-exchange img {
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
+}
+.pair-stats {
+  color: #fff;
+  background: #000d26;
+  padding: 0 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 0px auto;
+  font-size: 0.9rem;
+  position: sticky;
+  top: 10px;
+}
+
+.pair-stats h1 {
+  font-size: 24px;
+}
+
+.timeframe-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #1a3657;
+}
+
+.timeframe-buttons button {
+  border-radius: 0;
+  flex: 1;
+  padding: 10px;
+  margin: 0;
+  border: none;
+  background-color: #000d26;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.timeframe-buttons button:first-child {
+  border-top-left-radius: 7px;
+}
+
+.timeframe-buttons button:last-child {
+  border-top-right-radius: 7px;
+}
+
+.timeframe-buttons button.active {
+  background-color: #0e2135;
+  color: #fff;
+}
+
+.price-change {
+  display: block;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.stats-display {
+  margin-top: 20px;
+  padding: 0px 20px 0 10px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.stat-row strong {
+  font-weight: bold;
+}
+
+.stat-group {
+  margin-bottom: 20px;
+}
+
+.stat-group strong {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-bar {
+  display: flex;
+  height: 7px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  text-align: center;
+  font-size: 12px;
+  line-height: 7px;
+  color: #fff;
+  transition: width 0.6s ease-in-out;
+  margin: 0 2px;
+  border-radius: 10px;
+}
+
+.bar.green {
+  background-color: #4ce666;
+}
+
+.bar.red {
+  background-color: #e64c4c;
+}
+
+.stat-titles {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.stat-titles .right {
+  text-align: right;
+}
+
+.small-text {
+  font-size: 0.6rem;
+}
+
+tr.buy td {
+  /* color: #32a57a; */
+  color: #4ce666;
+}
+
+tr.sell td {
+  /* color: #d76565; */
+  color: #e64c4c;
+}
+
+.new-transaction {
+  animation: fade-in-out 2s forwards;
+}
+
+.transaction-row button.btn.btn-primary.btn-sm {
+  padding: 5px 10px;
+}
+
+@keyframes fade-in-out {
+  0% {
+    background-color: rgba(72, 187, 120, 0.5); /* Green for buy */
+  }
+  50% {
+    background-color: rgba(72, 187, 120, 0.2); /* Lighter green */
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+tr.sell.new-transaction {
+  animation: fade-in-out-red 2s forwards;
+}
+
+@keyframes fade-in-out-red {
+  0% {
+    background-color: rgba(245, 101, 101, 0.5); /* Red for sell */
+  }
+  50% {
+    background-color: rgba(245, 101, 101, 0.2); /* Lighter red */
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.stat-total {
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 27px;
+}
+
+.stat-total .value,
+.stat-titles .value {
+  font-weight: 700;
+}
+
+.liquidity-risk.deep {
+  background: #4ce266;
+  display: inline-block;
+  color: #05411c;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 30px;
+}
+
+.liquidity-risk.good {
+  background: #8de24c;
+  display: inline-block;
+  color: #05411c;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 30px;
+}
+
+.liquidity-risk.low {
+  background: #e2b54c;
+  display: inline-block;
+  color: #412c05;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 30px;
+}
+
+.liquidity-risk.super-low {
+  background: #e24c4c;
+  display: inline-block;
+  color: #410805;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 30px;
+}
+
+td.wallet-address .address {
+  min-width: 50%;
+}
+
+td.wallet-address .repeat {
+  margin-left: 5px;
+  font-size: 1.2rem;
+}
+
+.wallet-info p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.copy-container {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.copy-container .copy {
+  margin-left: 0;
+}
+
+.popover {
+  max-width: 250px;
+}
+
+.trade-size-label {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+}
+
+.trade-size-label.whale {
+  background-color: #1e3a8a;
+}
+
+.trade-size-label.shark {
+  background-color: #2563eb;
+}
+
+.trade-size-label.fish {
+  background-color: #10b981;
+}
+
+.trade-size-label.crab {
+  background-color: #f59e0b;
+}
+
+.trade-size-label.shrimp {
+  background-color: #ef4444;
+}
+
+.wallet-info {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.trade-size-label {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.trade-size-label.whale {
+  background-color: #4caf50;
+  color: white;
+}
+
+.trade-size-label.shark {
+  background-color: #2196f3;
+  color: white;
+}
+
+.trade-size-label.fish {
+  background-color: #ffeb3b;
+  color: black;
+}
+
+.trade-size-label.crab {
+  background-color: #ff9800;
+  color: white;
+}
+
+.trade-size-label.shrimp {
+  background-color: #f44336;
+  color: white;
+}
+
+/* .repeated-wallet {
+  background: #0f0f48 !important;
+} */
+
+.transaction-row {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.transaction-row td {
+  vertical-align: middle;
+  font-size: 14px;
+  border: none;
+  border-left: 1px solid #131f34;
+  padding: 4px 12px;
+}
+
+td.timestamp {
+  color: #516574 !important;
+}
+
+.text-right {
+  text-align: right;
+}
+
+td .copy-container {
+  display: flex;
+}
+
+td.bold {
+  font-weight: 600;
+}
+
+th {
+  background: #001233 !important;
+  border-left: 1px solid #172844;
+  padding: 10px 12px !important;
+}
+
+.token-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.token-stat {
+  border: 1px solid #1a3657;
+  border-radius: 8px;
+  padding: 5px 10px;
+  margin: 5px;
+  text-align: center;
+}
+
+.two .token-stat {
+  width: 50%;
+}
+
+.three .token-stat {
+  width: 33%;
+}
+
+.token-stat .value {
+  font-weight: 700;
+}
+
+.token-stat .title {
+  color: #68738d;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.pair-stats-timeframes,
+.liquidity-stats {
+  border: 1px solid #1a3657;
+  border-radius: 8px;
+  padding: 0;
+  margin: 5px;
+}
+
+.pair-stats-timeframes {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 0;
+}
+
+.liquidity-stats {
+  margin-top: 0px;
+  padding: 15px;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.pair-info .col-lg-3.border-right {
+  border-right: 1px solid #1a3656;
+}
+
+.liquidity-stats .liquidity {
+  display: flex;
+  align-items: center;
+}
+
+.liquidity-stats .total-liquidity {
+  margin-left: 10px;
+  font-weight: 700;
+}
+
+.liquidity-stats .sentence {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.trending-title {
+  display: flex;
+  align-items: center;
+}
+
+.liquidity-sentence {
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.02rem;
+}

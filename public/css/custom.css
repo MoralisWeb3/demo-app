@@ -1,0 +1,2253 @@
+body {
+  background: #000d26;
+  color: white;
+  font-family: "Golos Text";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  cursor: default;
+  margin-top: 120px;
+}
+
+img {
+  max-width: 100%;
+}
+
+#back-home {
+  position: fixed;
+  top: 27px;
+  left: 20px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  background: #0055ff;
+  padding: 3px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+#nft-marketplace h1.intro {
+  text-align: center;
+}
+#nft-marketplace .nft-holder {
+  width: 100%;
+}
+#nft-marketplace .hero-section {
+  height: 400px;
+  margin-top: -37px;
+  position: relative;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+#nft-marketplace .hero-section .hero-img {
+  height: 100%;
+  opacity: 0.3;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#nft-marketplace h2 {
+  margin-bottom: 0;
+  font-size: 1.7rem;
+  margin-top: 50px;
+}
+#nft-marketplace .collection-card {
+  cursor: pointer;
+}
+#nft-marketplace .collection-card .title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#nft-marketplace .token-list li img {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+}
+#nft-marketplace .token-list li > div:nth-child(2) {
+  width: 30%;
+}
+#nft-marketplace .token-list li > div:nth-child(1) {
+  width: 70px;
+}
+#nft-marketplace .token-list.featured li > div:nth-child(2) {
+  width: 70%;
+  -webkit-box-flex: 0 !important;
+      -ms-flex: none !important;
+          flex: none !important;
+}
+#nft-marketplace .token-list.featured {
+  font-size: 1.2rem;
+}
+#nft-marketplace .nft .nft-preview {
+  height: 340px;
+}
+#nft-marketplace .collection-floor {
+  font-size: 2rem;
+  font-weight: 600;
+}
+#nft-marketplace .collection-floor span {
+  font-size: 1.2rem;
+}
+#nft-marketplace .wallet-card.marketplaces {
+  background: rgba(0, 13, 38, 0.5607843137);
+}
+#nft-marketplace .collection-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#nft-marketplace .collection-info .spacer {
+  margin: 0 10px;
+}
+#nft-marketplace .collection-info svg,
+#nft-marketplace .collection-info path {
+  fill: #0d6efd;
+}
+
+ul.nft-traits {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+ul.nft-traits li {
+  background: #03142c;
+  padding: 10px 19px;
+  border: 1px solid #061a40;
+  border-radius: 4px;
+  margin: 10px;
+  max-width: 140px;
+  width: 20%;
+  min-width: 120px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 0.9rem;
+}
+ul.nft-traits li .trait {
+  font-size: 0.8rem;
+}
+ul.nft-traits li .value {
+  font-weight: 800;
+}
+
+#spam {
+  max-width: 900px;
+}
+#spam h5 {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+#spam h1 {
+  font-size: 3.3rem;
+}
+#spam h4 {
+  font-weight: 700;
+}
+
+.demo-link {
+  text-decoration: none;
+}
+.demo-link .demo-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+}
+.demo-link p {
+  color: #b1bbce;
+}
+
+.equal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+h1,
+h2 {
+  font-weight: 700;
+}
+
+.btn {
+  padding: 10px 25px;
+  border-radius: 10px;
+}
+
+.btn.btn-outline {
+  color: white;
+  border: 1px solid #2a304f;
+}
+
+.btn.icon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.btn.icon svg {
+  margin-left: 5px;
+}
+
+h3.sub-header {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.summary-section .wallet-card {
+  margin-top: 10px;
+}
+
+#defi-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+#defi-page .protocol-title {
+  text-transform: capitalize;
+}
+#defi-page .rewards-available {
+  background: #019552;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-left: 10px;
+}
+#defi-page .position-count {
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: #b1bbce;
+}
+#defi-page ul.summary-protocols {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+#defi-page ul.summary-protocols img {
+  max-width: 30px;
+  margin-right: 12px;
+}
+#defi-page ul.summary-protocols li {
+  width: 100%;
+  background: #04142c;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px 15px;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-width: 17%;
+  padding: 15px;
+  border-radius: 7px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+#defi-page .protocol-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 20px;
+}
+#defi-page .protocol-details .protocol-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+#defi-page .protocol-details img {
+  border-radius: 100px;
+  margin-right: 10px;
+  max-width: 50px;
+}
+#defi-page .position img {
+  width: 40px;
+}
+#defi-page .position .defi-token {
+  font-weight: 600;
+}
+#defi-page .position .deposited-token {
+  color: #b1bbce;
+  font-size: 0.9rem;
+}
+#defi-page .summary-positions .wallet-card {
+  cursor: pointer;
+}
+
+#defi-page.detailed .protocol-details {
+  border-bottom: none;
+}
+#defi-page.detailed .detailed-position {
+  background: #02122e;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  padding: 30px;
+}
+#defi-page.detailed .detailed-position h5 {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+#defi-page.detailed .detailed-position .extra-detail {
+  margin-top: 30px;
+}
+
+.copy {
+  padding: 7px;
+  background: #2b3351;
+  border: 1px solid #363841;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-left: 6px;
+}
+
+.copy-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.naked-link {
+  text-align: center;
+}
+.naked-link a {
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 500;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.naked-link a svg {
+  margin-left: 3px;
+  fill: #0d6efd;
+}
+.naked-link a svg path {
+  fill: #0d6efd;
+}
+
+#wallet-container .divider {
+  margin-top: 40px;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+#wallet-container .wallet-card {
+  text-align: left;
+}
+#wallet-container .wallet-card h3 {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+#wallet-container p {
+  font-size: 1.2rem;
+}
+#wallet-container p.error-msg {
+  font-size: 0.9rem;
+  margin-top: 10px;
+  color: #ff4a4a;
+}
+#wallet-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+#wallet-container form input {
+  padding: 15px 20px;
+}
+#wallet-container form .btn {
+  padding: 13px 20px;
+  font-size: 1.1rem;
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+.loader-container {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+input[type=text] {
+  background: #0f2140;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: white;
+  width: 100%;
+  max-width: 400px;
+}
+
+select,
+button.spam {
+  max-width: 180px;
+  background-color: #0f2140;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button.spam {
+  margin-right: 10px;
+}
+
+.badges {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
+}
+.badges .badge-card {
+  background: #0f2140;
+  margin: 5px;
+  text-align: center;
+  width: 47%;
+  padding: 20px 10px;
+  border-radius: 8px;
+  opacity: 0.2;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.badges .badge-card.active {
+  opacity: 1;
+}
+
+.etherscan {
+  background: white;
+  border-radius: 100px;
+  padding: 1px;
+}
+
+.overview h2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.page-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.page-header .domains {
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.page-header .domains a {
+  color: white;
+  text-decoration: none;
+}
+.page-header .domains img {
+  width: 20px;
+  margin-right: 5px;
+}
+.page-header .domains > div {
+  background: #04142c;
+  margin: 10px 0px 10px 10px;
+  padding: 10px;
+  border-radius: 100px;
+  border: 1px solid #252737;
+}
+
+.nav-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 0 60px;
+  background: #04142c;
+  padding: 20px 0;
+  border-bottom: 1px solid #242737;
+  min-height: 84px;
+}
+.nav-bar li.nav-item {
+  margin: 0 5px;
+}
+.nav-bar li.nav-item a {
+  padding: 20px;
+  color: white;
+  text-decoration: none;
+  border: 1px solid transparent;
+  padding: 8px 20px;
+  font-weight: 600;
+  color: #b1bbce;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.nav-bar li.nav-item a:hover,
+.nav-bar li.nav-item a.active {
+  color: white;
+  background: #000d26;
+  border: 1px solid #061a40;
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 8px 20px;
+  opacity: 1;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+ul li {
+  padding: 0;
+}
+
+.modal button.close {
+  background: rgba(0, 0, 0, 0.4509803922);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: none;
+  position: absolute;
+  right: 10px;
+  border-radius: 1000px;
+  width: 50px;
+  height: 50px;
+}
+.modal button.close svg {
+  width: 20px;
+}
+.modal .modal-header,
+.modal .modal-footer {
+  display: none;
+}
+.modal .modal-content {
+  background: #000d26;
+  color: white;
+  min-height: 100vh;
+}
+
+.modal-backdrop.show {
+  opacity: 0.8;
+}
+
+.nft-modal img.nft-image,
+.token-modal img.nft-image {
+  width: 100%;
+  border-radius: 10px;
+}
+.nft-modal .nft-modal-content,
+.nft-modal .token-modal-content,
+.token-modal .nft-modal-content,
+.token-modal .token-modal-content {
+  background: #04142c;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+.nft-modal .verified-collection,
+.token-modal .verified-collection {
+  font-weight: 600;
+}
+.nft-modal .title,
+.token-modal .title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.nft-modal .subtitle,
+.token-modal .subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.nft-modal .nft-type-label,
+.token-modal .nft-type-label {
+  font-size: 0.8rem;
+  background: #007b6e;
+  padding: 5px 8px;
+  border-radius: 40px;
+  margin-left: 5px;
+}
+
+ul.table-list li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid #172844;
+  padding: 10px 0;
+}
+ul.table-list li .left {
+  opacity: 0.8;
+}
+ul.table-list li .right {
+  font-weight: 600;
+}
+ul.table-list li:last-of-type {
+  border: none;
+}
+
+.wallet-card {
+  width: 100%;
+  border: 1px solid rgb(22, 49, 89);
+  border-radius: 15px;
+  padding: 30px;
+  margin: 30px 0;
+  -webkit-transition: background 0.4s;
+  transition: background 0.4s;
+}
+.wallet-card .card-img {
+  height: 250px;
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border: 1px solid rgb(22, 49, 89);
+}
+.wallet-card a {
+  text-decoration: none;
+}
+.wallet-card .card-info {
+  color: #b1bbce;
+  margin-bottom: 15px;
+}
+.wallet-card .native-holdings {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-left: 5px;
+}
+.wallet-card .title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.wallet-card .heading {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #b1bbce;
+}
+.wallet-card .big-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.wallet-card ul.big-value {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.wallet-card li.chain {
+  margin-right: -20px;
+}
+.wallet-card li.chain img {
+  min-width: 40px;
+  border-radius: 100px;
+  height: 40px;
+  margin: 0 5px 0 0;
+}
+
+.wallet-card.light {
+  background: #0f2140;
+}
+
+.wallet-card.top {
+  margin: 10px 0 0;
+}
+
+.heading-group {
+  margin-bottom: 10px;
+}
+
+.nft-summary {
+  margin-bottom: 20px;
+}
+
+.profile-intro {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.wallet-card.interactions {
+  min-height: 600px;
+}
+.wallet-card.interactions .address {
+  font-weight: 600;
+}
+.wallet-card.interactions ul.nav.nav-tabs {
+  border: none;
+}
+.wallet-card.interactions ul.nav.nav-tabs .nav-item {
+  width: 50%;
+}
+.wallet-card.interactions ul.nav.nav-tabs a.nav-link {
+  padding: 20px;
+  color: white;
+  text-decoration: none;
+  border: 1px solid transparent;
+  padding: 8px 20px;
+  font-weight: 600;
+  color: #b1bbce;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.wallet-card.interactions ul.nav.nav-tabs a.nav-link:hover {
+  color: white;
+  background: #0f2140;
+}
+.wallet-card.interactions ul.nav.nav-tabs a.nav-link.active {
+  color: white;
+  background: #0f2140;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 8px 20px;
+  opacity: 1;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.wallet-card.interactions .wallet-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 0;
+}
+.wallet-card.interactions .wallet-flex svg {
+  width: 50px;
+  margin-right: 5px;
+  margin-left: 0;
+}
+.wallet-card.interactions .interactions-container {
+  padding: 10px;
+}
+.wallet-card.interactions .tab-content {
+  margin-top: 20px;
+  padding: 0 5px;
+}
+
+.lines {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.lines .line,
+.lines .thumb {
+  background-color: #f5f5f5;
+  height: 24px;
+  margin: 8px;
+  width: 100%;
+  border-radius: 4px;
+}
+.lines .thumb {
+  height: 7.5rem;
+}
+.lines .line.card {
+  min-height: 250px;
+  border-radius: 10px;
+}
+
+#nft-page {
+  max-width: 1000px;
+}
+
+.nft {
+  width: 100%;
+  background: #04142c;
+  border-radius: 10px;
+  margin: 20px 0;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #061a40;
+}
+.nft .title {
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.nft .nft-content {
+  padding: 10px 20px 20px;
+}
+.nft .contract {
+  opacity: 0.5;
+  font-size: 0.8rem;
+}
+.nft .nft-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.nft .collection-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.nft:hover .spam-nft {
+  opacity: 1;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.nft .verified-collection {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.631372549);
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 23px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.nft svg {
+  margin-left: 5px;
+}
+.nft .sale-price {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.nft span.usd-price {
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: -0.02rem;
+}
+.nft .spam-label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #af7600;
+  color: #ffffff;
+  padding: 2px 5px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 2;
+}
+.nft .nft-type {
+  color: #9da0a6;
+  font-size: 0.8rem;
+}
+.nft .nft-preview {
+  width: 100%;
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.nft .nft-detail {
+  padding: 20px;
+}
+
+#home .intro.wallet-card p {
+  font-size: 1.1rem;
+}
+#home .wallet-card:hover {
+  background: #04142c;
+}
+#home h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02rem;
+  margin-bottom: -10px;
+  padding-top: 30px;
+}
+
+#history-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+#history-page .secondary-line {
+  font-size: 0.8rem;
+  color: #424f61;
+}
+#history-page .page-header h2 {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+#history-page .page-header div {
+  margin-left: 10px;
+}
+#history-page .history-item {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#history-page .history-item .tx,
+#history-page .history-item .timestamp {
+  color: #424f61;
+  font-size: 0.8rem;
+}
+#history-page .history-item .label,
+#history-page .history-item .category {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+#history-page .history-item .category {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#history-page .history-item .category svg {
+  margin-left: 5px;
+}
+#history-page .history-item > div:nth-child(1) {
+  width: 40px;
+}
+#history-page .history-item > div:nth-child(2) {
+  width: 22%;
+}
+#history-page .history-action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#history-page .history-icon {
+  position: relative;
+}
+#history-page .history-icon .mini-chain {
+  max-width: 15px;
+  position: absolute;
+  right: 0;
+  bottom: -3px;
+}
+#history-page .history-icon .mini-chain.regular {
+  right: 6px;
+}
+#history-page .history-image .image {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+#history-page .history-image svg {
+  width: 30px;
+  margin-right: 10px;
+}
+#history-page .history-image img {
+  width: 30px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+#history-page .accordion-button {
+  background: #000d26;
+  color: white;
+}
+#history-page .accordion-button:after {
+  -webkit-filter: brightness(18.5);
+          filter: brightness(18.5);
+}
+#history-page .accordion-button:not(.collapsed) {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+#history-page .accordion-flush .accordion-item {
+  border-bottom: 1px solid #061a40;
+}
+#history-page .accordion-flush .accordion-collapse {
+  background: #04142c;
+  color: white;
+}
+#history-page .collapse.show .accordion-body {
+  background: #04142c;
+}
+#history-page .tx-detail {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  text-align: left;
+}
+#history-page .tx-detail > div {
+  width: 50%;
+}
+#history-page .tx-detail > div ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+#history-page .tx-detail > div ul li .image {
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-size: cover;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+#history-page .title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+#history-page .tx-summary {
+  background: #0f2140;
+  border-radius: 15px;
+  padding: 20px 30px;
+  margin: 20px 0;
+}
+#history-page .tx-summary .data-point {
+  opacity: 0.8;
+}
+#history-page .tx-summary .value {
+  font-weight: 600;
+}
+#history-page .tx-summary li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #172844;
+}
+#history-page .tx-summary li:last-of-type {
+  border-bottom: none;
+}
+
+.transfer-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #172844;
+}
+.transfer-item:last-of-type {
+  border-bottom: none;
+}
+.transfer-item .category {
+  width: 12%;
+}
+.transfer-item .category > div {
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #0d6efd;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 5px;
+}
+.transfer-item .category .sale {
+  background: #d500b5;
+}
+.transfer-item .timestamp {
+  margin-left: auto;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #424f61;
+}
+.transfer-item .secondary-line {
+  font-size: 0.8rem;
+  color: #424f61;
+}
+.transfer-item .label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 70%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.transfer-item .group {
+  width: 25%;
+}
+.transfer-item .heading {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #b1bbce;
+}
+.transfer-item .value {
+  font-weight: 600;
+}
+
+ul.flex-table {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+ul.flex-table li.flex-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+ul.flex-table li.flex-row .group {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+ul.flex-table li.flex-row .group.small {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100px;
+          flex: 0 0 100px;
+}
+ul.flex-table li.flex-row .heading {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+ul.flex-table li.flex-row .value {
+  margin-bottom: 5px;
+}
+ul.flex-table li.flex-row .timestamp {
+  text-align: right;
+}
+
+#history-page .zerion {
+  font-size: 0.9rem;
+}
+#history-page .zerion .date-heading {
+  line-height: 20px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  margin-top: 20px;
+}
+#history-page .zerion img {
+  max-width: 40px;
+}
+#history-page .zerion .history-category {
+  margin-left: 10px;
+  margin-top: 3px;
+}
+#history-page .zerion .history-left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 22% !important;
+}
+#history-page .zerion .history-right {
+  margin-left: auto;
+  width: 22%;
+}
+#history-page .zerion .history-right .heading {
+  color: #868990;
+}
+#history-page .zerion .history-right img {
+  width: 16px;
+  border-radius: 2px;
+  margin-right: 3px;
+}
+#history-page .zerion .history-item {
+  border-bottom: 1px solid #2d2d32;
+  height: 68px;
+}
+#history-page .zerion .history-item .category {
+  font-size: unset;
+  font-weight: 400;
+}
+#history-page .zerion .history-item:last-of-type {
+  margin-bottom: 10px;
+}
+#history-page .zerion .history-item:first-of-type {
+  border-top: 1px solid #2d2d32;
+}
+#history-page .zerion .token-details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#history-page .zerion .token-details img {
+  margin-right: 8px;
+  width: 35px;
+  border-radius: 4px;
+}
+#history-page .zerion .token-details .received {
+  color: #4fbf67;
+}
+#history-page .zerion .token-details .default-logo {
+  font-size: 0.6rem;
+  font-weight: 500;
+  background: #2d2d32 !important;
+  color: #cecfd1 !important;
+  margin-right: 8px;
+  width: 35px;
+  height: 35px;
+}
+#history-page .zerion .history-action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+#history-page .zerion .history-action .block-1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+}
+#history-page .zerion .history-action .block-1 .token-details {
+  min-width: 250px;
+}
+#history-page .zerion .history-action .block-1 svg,
+#history-page .zerion .history-action .block-2 svg {
+  width: 15px;
+  position: absolute;
+  right: 20px;
+}
+#history-page .zerion .history-action .block-2 {
+  min-width: 100%;
+  max-width: 100%;
+}
+#history-page #fetch-txs {
+  text-align: center;
+}
+#history-page #fetch-txs button {
+  border: 1px solid #45464a;
+  background: transparent;
+  color: white;
+  padding: 7px 19px;
+  height: 44px;
+  border-radius: 8px;
+}
+#history-page .zapper .top-section {
+  background: #191c1e;
+  border-radius: 20px;
+  padding: 20px;
+}
+#history-page .zapper .top-section h3 {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+#history-page .zapper li.zapper-tx {
+  background: #191c1e;
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid #2d2d32;
+  margin-top: 20px;
+}
+#history-page .zapper .top,
+#history-page .zapper .bottom {
+  width: 100%;
+}
+#history-page .zapper .top {
+  position: relative;
+}
+#history-page .zapper .top a {
+  color: rgb(163, 135, 254);
+  text-decoration: none;
+}
+#history-page .zapper .top a span {
+  color: white;
+}
+#history-page .zapper .top .summary {
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+#history-page .zapper .top .spam-label {
+  position: absolute;
+  background: rgba(236, 97, 0, 0.5803921569);
+  color: #ffa400;
+  right: 0;
+  top: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+#history-page .zapper .bottom {
+  border-top: 1px solid #2d2d32;
+}
+#history-page .zapper .meta {
+  font-size: 0.9rem;
+  color: #c6d2db;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#history-page .zapper .address-line {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#history-page .zapper .address-line .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#history-page .zapper .address-line .divider {
+  margin: 0 5px;
+}
+#history-page .zapper .address-line .address {
+  font-weight: 500;
+}
+#history-page .zapper .address-line img {
+  max-width: 40px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+#history-page .zapper .address-line .mini-chain {
+  max-width: 18px;
+}
+#history-page .zapper .break {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  height: 0;
+}
+#history-page .zapper .bottom ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+#history-page .zapper .bottom li.nft-details {
+  max-width: 250px;
+  border-radius: 20px;
+  background: #242a2f;
+  margin: 10px 10px 10px 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+#history-page .zapper .bottom li.nft-details img {
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  max-width: 100%;
+}
+#history-page .zapper .bottom li.nft-details .info-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px;
+}
+#history-page .zapper .token-details {
+  background: #242a2f;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px 10px 10px 0;
+  padding: 6px 10px;
+  border-radius: 14px;
+  font-weight: 500;
+}
+#history-page .zapper .token-details img,
+#history-page .zapper .token-details .default-logo {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  font-size: 0.8rem;
+}
+#history-page .zapper .direction-label {
+  font-size: 0.8rem;
+  border: 1px solid #3d3d42;
+  border-radius: 4px;
+  margin-left: 5px;
+  padding: 1px 5px;
+  font-weight: 600;
+}
+#history-page .uniswap {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 20px;
+  letter-spacing: -0.01em;
+}
+#history-page .uniswap .date-heading {
+  color: rgb(155, 155, 155);
+  font-weight: 500;
+  line-height: 34px;
+}
+#history-page .uniswap li.uniswap-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 15px 0;
+  font-weight: 500;
+}
+#history-page .uniswap li.uniswap-item .tx-detail {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-right: 35px;
+}
+#history-page .uniswap li.uniswap-item .tx-detail .summary {
+  width: 100%;
+  color: rgb(155, 155, 155);
+  font-size: 0.9rem;
+}
+#history-page .uniswap li.uniswap-item .date {
+  margin-left: auto;
+  color: rgb(155, 155, 155);
+  font-size: 0.9rem;
+}
+#history-page .uniswap li.uniswap-item .history-icon {
+  width: 45px;
+  margin-right: 10px;
+}
+#history-page .uniswap li.uniswap-item .tx-category {
+  text-transform: capitalize;
+}
+#history-page .uniswap li.uniswap-item .tx-detail {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+#history-page .uniswap li.uniswap-item img {
+  max-width: 40px;
+  border-radius: 100px;
+}
+#history-page .uniswap li.uniswap-item img.mini-chain {
+  max-width: 15px;
+}
+
+.token-dashboard .col-lg-4 {
+  padding-right: 30px;
+}
+.token-dashboard .col-lg-8 {
+  padding-left: 30px;
+}
+.token-dashboard .token-top .image {
+  width: 60px !important;
+}
+.token-dashboard .token-top .image img {
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+}
+.token-dashboard .token-top .title {
+  font-size: 1.9rem;
+  line-height: 1.2;
+}
+.token-dashboard .token-top .symbol {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #68738d;
+}
+.token-dashboard h5 {
+  font-weight: 700;
+}
+.token-dashboard .token-price {
+  font-weight: 600;
+  font-size: 2.4rem;
+  letter-spacing: -0.04rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.token-dashboard .negative,
+.token-dashboard .positive {
+  font-size: 1.5rem;
+  margin-left: 10px;
+}
+.token-dashboard .exchange-price {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #68738d;
+  margin-bottom: 20px;
+}
+.token-dashboard ul.table-list {
+  font-size: 0.9rem;
+}
+.token-dashboard ul.table-list li .left {
+  opacity: 1;
+  color: #7886a6;
+}
+.token-dashboard .token-balances-mini {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: 7px;
+}
+.token-dashboard .token-balances-mini img {
+  background: white;
+}
+.token-dashboard .token-balances-mini img,
+.token-dashboard .token-balances-mini .default-logo {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 100px;
+  margin-left: -7px;
+  cursor: pointer;
+}
+
+.page ul.nav.nav-tabs {
+  border-bottom: 1px solid #172844;
+}
+.page ul.nav.nav-tabs .nav-link {
+  cursor: pointer;
+}
+.page ul.nav.nav-tabs a.active.nav-link {
+  border-color: transparent;
+  background-color: transparent;
+  color: #0d6efd;
+  border-bottom: 2px solid #0d6efd;
+}
+.page ul.nav.nav-tabs a.nav-link {
+  color: white;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.page ul.nav.nav-tabs a.nav-link:hover {
+  border-color: transparent;
+  border-bottom: 2px solid #0d6efd;
+}
+.page .tab-content {
+  padding: 30px 10px;
+}
+.page .tab-content h2 {
+  margin-top: 0 !important;
+}
+
+.token-popup {
+  padding: 20px;
+  text-align: left;
+}
+.token-popup .token-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.token-popup .token-title img {
+  width: 40px;
+  margin-right: 5px;
+  border-radius: 100px;
+}
+.token-popup .popup-group {
+  margin: 10px 0 10px 0;
+}
+.token-popup .popup-group .heading {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+.token-popup .popup-group .value {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.popup .tooltip,
+.popup .tooltip-inner {
+  width: 400px;
+  max-width: 400px;
+}
+
+table.table {
+  background-color: transparent !important;
+  --bs-table-bg: transparent;
+  --bs-table-color: white;
+  --bs-table-border-color: #172844;
+  font-size: 0.9rem;
+}
+
+.live {
+  height: 24px;
+  width: 24px;
+  display: block;
+  border-radius: 50%;
+  background-color: #ff69b4;
+  -webkit-animation: pulse 1500ms infinite;
+          animation: pulse 1500ms infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: #ff69b4 0 0 0 0;
+            box-shadow: #ff69b4 0 0 0 0;
+  }
+  75% {
+    -webkit-box-shadow: rgba(255, 105, 180, 0) 0 0 0 16px;
+            box-shadow: rgba(255, 105, 180, 0) 0 0 0 16px;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-box-shadow: #ff69b4 0 0 0 0;
+            box-shadow: #ff69b4 0 0 0 0;
+  }
+  75% {
+    -webkit-box-shadow: rgba(255, 105, 180, 0) 0 0 0 16px;
+            box-shadow: rgba(255, 105, 180, 0) 0 0 0 16px;
+  }
+}
+#market-data {
+  margin-top: -80px;
+}
+#market-data h3 {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+#market-data .token-list.market-data li > div:nth-child(2) {
+  width: 15%;
+}
+#market-data .token-list.wider-col-1 li > div:nth-child(2) {
+  width: 25%;
+}
+#market-data .nav.nav-tabs {
+  margin-bottom: 20px;
+  border-bottom: none;
+  font-size: 0.9rem;
+}
+#market-data .nav-tabs .nav-link {
+  font-weight: 600;
+  opacity: 0.6;
+  cursor: pointer;
+  border: none;
+}
+#market-data .nav-tabs .nav-link:hover {
+  border: none;
+  opacity: 1;
+}
+#market-data .nav-tabs .nav-link.active {
+  opacity: 1;
+  background-color: transparent;
+  color: white;
+  background: #0d6efd;
+  border-radius: 22px;
+  border: none;
+}
+
+.networth h2 {
+  display: block;
+}
+.networth .chain-networth {
+  font-size: 2rem;
+  font-weight: 600;
+}
+.networth .chain-networth img {
+  width: 40px;
+}
+
+.mint,
+.burn {
+  font-size: 0.7rem;
+  background: #ffcaca;
+  color: #730101;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  padding: 2px 10px;
+  border-radius: 4px;
+  margin-left: 5px;
+}
+
+.mint {
+  background: #cafdff;
+  color: #01735c;
+}
+
+.internal-txs {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02rem;
+  margin-bottom: -10px;
+  padding-top: 30px;
+}
+.internal-txs .heading-group {
+  width: 30%;
+}
+
+ul.token-categories,
+ul.token-links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+ul.token-categories li,
+ul.token-links li {
+  font-size: 0.8rem;
+  background: #03142c;
+  border: 1px solid #172844;
+  padding: 3px 10px;
+  border-radius: 5px;
+  margin: 4px;
+  color: white;
+}
+ul.token-categories li a,
+ul.token-links li a {
+  color: white;
+  text-decoration: none;
+}
+ul.token-categories li img,
+ul.token-links li img {
+  width: 15px;
+  margin-right: 2px;
+}
+ul.token-categories li svg,
+ul.token-links li svg {
+  margin-left: 2px;
+}
+
+button.btn.portfolio-back {
+  padding: 7px 10px;
+  margin-top: -40px;
+}
+
+#token-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.token-modal-content .transfer-item .label,
+.token-page-content .transfer-item .label {
+  width: 75%;
+}
+.token-modal-content h2,
+.token-page-content h2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 20px 0;
+}
+.token-modal-content .title,
+.token-page-content .title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.token-modal-content .canvas,
+.token-page-content .canvas {
+  height: 500px;
+}
+.token-modal-content canvas,
+.token-page-content canvas {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.token-modal-content .percent-change,
+.token-page-content .percent-change {
+  background: #03c367;
+  font-size: 1rem;
+  padding: 3px 10px;
+  border-radius: 15px;
+  color: #000000;
+  margin-left: 10px;
+}
+.token-modal-content .percent-change.down,
+.token-page-content .percent-change.down {
+  background: #b43232;
+  color: #320000;
+}
+.token-modal-content .token-top,
+.token-page-content .token-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.token-modal-content .token-top .image,
+.token-page-content .token-top .image {
+  width: 60px;
+  margin-right: 10px;
+}
+.token-modal-content .token-top .image img,
+.token-page-content .token-top .image img {
+  max-width: 100%;
+}
+.token-modal-content .common-tokens .token-balances-mini img,
+.token-page-content .common-tokens .token-balances-mini img {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 100px;
+  cursor: pointer;
+  margin: 10px -3px 0;
+}
+.token-modal-content .holders-summary.wallet-card span,
+.token-page-content .holders-summary.wallet-card span {
+  font-weight: 700;
+}
+
+.position {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.position img {
+  width: 60px;
+}
+
+li.header-row {
+  font-size: 0.9rem;
+  cursor: default !important;
+}
+li.header-row:hover {
+  background: none !important;
+}
+li.header-row div {
+  font-weight: 600 !important;
+}
+
+.token-list li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #1d2b46;
+  padding: 15px 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  position: relative;
+}
+.token-list li:last-of-type {
+  border-bottom: none;
+}
+.token-list li > div:nth-child(1) {
+  width: 50px;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+.token-list li > div:nth-child(2) {
+  width: 40%;
+  -webkit-box-flex: 0 !important;
+      -ms-flex: none !important;
+          flex: none !important;
+}
+.token-list li > div:not(:nth-child(1)) {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  font-weight: 500;
+}
+.token-list li img {
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+}
+.token-list li .default-logo {
+  width: 30px;
+  height: 30px;
+}
+.token-list li .token-name {
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.token-list li .token-symbol {
+  color: #b1bbce;
+  font-size: 0.9rem;
+}
+.token-list li .rewards-available {
+  position: absolute;
+  right: 0;
+  font-size: 0.7rem !important;
+  background: #019552;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.token-list.approvals > div:nth-child(2) {
+  width: 20%;
+  -webkit-box-flex: 0 !important;
+      -ms-flex: none !important;
+          flex: none !important;
+}
+
+.owners-list {
+  max-width: 550px;
+}
+.owners-list li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #1d2b46;
+  padding: 15px 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  position: relative;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.owners-list li:last-of-type {
+  border-bottom: none;
+}
+
+.defi-list .position-detail li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #1d2b46;
+  padding: 15px 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  position: relative;
+}
+.defi-list .position-detail li:last-of-type {
+  border-bottom: none;
+}
+.defi-list .position-detail li > div:nth-child(1) {
+  width: 50px;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+.defi-list .position-detail li > div:nth-child(2) {
+  width: 40%;
+  -webkit-box-flex: 0 !important;
+      -ms-flex: none !important;
+          flex: none !important;
+}
+.defi-list .position-detail li > div:not(:nth-child(1)) {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  font-weight: 500;
+}
+.defi-list .position-detail li img {
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+}
+.defi-list .position-detail li .default-logo {
+  width: 30px;
+  height: 30px;
+}
+.defi-list .position-detail li .token-name {
+  font-weight: 600;
+}
+.defi-list .position-detail li .token-symbol {
+  color: #b1bbce;
+  font-size: 0.9rem;
+}
+.defi-list .position-detail li .rewards-available {
+  position: absolute;
+  right: 0;
+  font-size: 0.7rem !important;
+  background: #019552;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.default-logo {
+  width: 40px;
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.negative {
+  color: #ff5c5c;
+}
+
+.positive {
+  color: #4fbf67;
+}
+
+.defi-list.nft-list li > div:nth-child(2) {
+  width: 55%;
+  -webkit-box-flex: 0 !important;
+      -ms-flex: none !important;
+          flex: none !important;
+}
+
+.rewards {
+  padding: 30px;
+}
+.rewards .modal-content {
+  min-height: unset;
+}
+
+.reward-list li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #061a40;
+  padding: 15px 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.reward-list li > div {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  max-width: 20%;
+  font-size: 0.9rem;
+}
+.reward-list li > div:nth-child(4) {
+  max-width: 100px;
+}
+.reward-list li .positive {
+  color: #4fbf67;
+}
+
+.token-list li {
+  cursor: pointer;
+}
+.token-list li:hover {
+  background: #04142c;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.token-list.mini li {
+  font-size: 0.89rem;
+  padding: 5px 0;
+  cursor: default;
+}
+.token-list.mini li:hover {
+  background: inherit;
+}
+
+.pulse {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(66deg, #04142c 0%, #000d26 50%, #04142c 100%);
+  background-size: 400% 400%;
+  -webkit-animation: pulse 1.2s ease-in-out infinite;
+          animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -135% 0%;
+  }
+}
+
+.loader {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid rgb(36, 102, 245);
+  border-right: 3px solid transparent;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-animation: rotation 0.6s linear infinite;
+          animation: rotation 0.6s linear infinite;
+  margin: 30px auto 70px;
+}
+
+@-webkit-keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}/*# sourceMappingURL=custom.css.map */

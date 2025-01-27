@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import apiIndex from "./api/index.js";
 import tokenApi from "./api/tokens.js";
+import pairApi from "./api/pairs.js";
 import nftApi from "./api/nfts.js";
 import historyApi from "./api/history.js";
 import defiApi from "./api/defi.js";
@@ -10,6 +11,7 @@ import pnlApi from "./api/pnl.js";
 import approvalsApi from "./api/approvals.js";
 import spamApi from "./api/spamCheck.js";
 import entitiesApi from "./api/entities.js";
+import volumeApi from "./api/volume.js";
 import path from "path";
 const __dirname = path.resolve();
 import { rateLimit } from "express-rate-limit";
@@ -34,6 +36,7 @@ app.use(limiter);
 
 app.use("/", apiIndex);
 app.use("/", tokenApi);
+app.use("/", pairApi);
 app.use("/", nftApi);
 app.use("/", historyApi);
 app.use("/", defiApi);
@@ -41,6 +44,7 @@ app.use("/", pnlApi);
 app.use("/", approvalsApi);
 app.use("/", spamApi);
 app.use("/", entitiesApi);
+app.use("/", volumeApi);
 
 const chains = [
   "eth",

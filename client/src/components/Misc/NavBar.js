@@ -9,6 +9,7 @@ const NavBar = () => {
     setGlobalDataCache((prevData) => ({
       ...prevData,
       approvals: null,
+      swaps: null,
       balance: null,
       chains: null,
       chartArray: null,
@@ -103,6 +104,14 @@ const NavBar = () => {
                   activeClassName="active"
                 >
                   Approvals
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  to={`/wallets/${globalDataCache.walletAddress}/swaps`}
+                  activeClassName="active"
+                >
+                  Swaps
                 </NavLink>
               </li>
             </ul>

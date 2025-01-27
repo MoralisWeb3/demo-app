@@ -15,6 +15,7 @@ import classnames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import NavBar from "../Misc/NavBar";
+import ProgressBar from "../Misc/ProgressBar";
 
 const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
   const { globalDataCache, setGlobalDataCache } = useData();
@@ -432,7 +433,7 @@ const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
               </div>
 
               <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                   <h5>Token Details</h5>
                   <ul className="table-list">
                     <li>
@@ -512,7 +513,7 @@ const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
                   </ul>
                 </div>
 
-                <div className="col-lg-8">
+                <div className="col-lg-6">
                   <>
                     <h5>Token Price Movement</h5>
                     <div className="canvas">
@@ -528,6 +529,155 @@ const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
                       )}
                     </div>
                   </>
+                </div>
+
+                <div className="col-lg-3">
+                  <h5>Pair Details</h5>
+                  <ul className="table-list">
+                    <li>
+                      <div className="left">Price USD</div>
+                      <div className="right">
+                        {utilities.formatAsUSD(
+                          globalDataCache.token.tokenPrice.usdPrice
+                        )}
+                      </div>
+                    </li>
+                    <li>
+                      <div className="left">Price</div>
+                      <div className="right">
+                        {globalDataCache.token.tokenPrice?.nativePrice?.value /
+                          Math.pow(10, 18)}
+                      </div>
+                    </li>
+                    <li>
+                      <div className="left">Pair Address</div>
+                      <div className="right">
+                        {utilities.shortAddress(
+                          globalDataCache.token?.tokenPrice?.pairAddress
+                        )}
+                      </div>
+                    </li>
+                    <li>
+                      <div className="left">Total Liquidity</div>
+                      <div className="right">
+                        {utilities.formatAsUSD(
+                          globalDataCache.token?.tokenPrice
+                            ?.pairTotalLiquidityUsd
+                        )}
+                      </div>
+                    </li>
+                    <li>
+                      <div className="left">Exchange</div>
+                      <div className="right">
+                        {globalDataCache.token?.tokenPrice?.exchangeName}
+                      </div>
+                    </li>
+                    <li>
+                      <div className="left">Exchange Address</div>
+                      <div className="right">
+                        {utilities.shortAddress(
+                          globalDataCache.token?.tokenPrice?.exchangeAddress
+                        )}
+                      </div>
+                    </li>
+                  </ul>
+
+                  <h5>Liquidity</h5>
+                  <ul className="liquidity-stats">
+                    <li className="full">
+                      <div className="value">
+                        $
+                        {utilities.abbreviateNumber(
+                          globalDataCache.token?.tokenPrice
+                            ?.pairTotalLiquidityUsd
+                        )}
+                      </div>
+                      <div className="title">Total Liquidity</div>
+                    </li>
+                    {globalDataCache.token?.pairBalance && (
+                      <li className="half">
+                        <div className="pair-liquidity">
+                          <div className="pair">
+                            <div className="value">
+                              $
+                              {utilities.abbreviateNumber(
+                                globalDataCache.token.pairBalance[1].usd_value
+                              )}
+                            </div>
+                            <div className="title">
+                              <img
+                                src={globalDataCache.token.pairBalance[1].logo}
+                                width="50"
+                              />
+                              {globalDataCache.token.pairBalance[1].symbol}
+                            </div>
+                            <div className="sub-title">
+                              {Number(
+                                globalDataCache.token.pairBalance[1]
+                                  .balance_formatted
+                              ).toFixed(2)}{" "}
+                              {globalDataCache.token.pairBalance[1].symbol}
+                            </div>
+                          </div>
+
+                          <div className="pair">
+                            <div className="value">
+                              $
+                              {utilities.abbreviateNumber(
+                                globalDataCache.token.pairBalance[0].usd_value
+                              )}
+                            </div>
+                            <div className="title">
+                              <img
+                                src={globalDataCache.token.pairBalance[0].logo}
+                                width="50"
+                              />
+                              {globalDataCache.token.pairBalance[0].symbol}
+                            </div>
+                            <div className="sub-title">
+                              {Number(
+                                globalDataCache.token.pairBalance[0]
+                                  .balance_formatted
+                              ).toFixed(2)}{" "}
+                              {globalDataCache.token.pairBalance[0].symbol}
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    )}
+
+                    <li className="full liquidity">
+                      <div className="title">
+                        {globalDataCache.token?.liquidityStatus
+                          .liquidityLocked ? (
+                          <div>✅</div>
+                        ) : (
+                          <div>❌</div>
+                        )}
+                        Locked Liquidity
+                      </div>
+                      {globalDataCache.token?.liquidityStatus
+                        .liquidityLocked ? (
+                        <>
+                          <ProgressBar
+                            value={
+                              globalDataCache.token?.liquidityStatus
+                                .amountLockedPercentage
+                            }
+                          />
+                          <div className="sub-title">
+                            {
+                              globalDataCache.token?.liquidityStatus
+                                .amountLockedPercentage
+                            }
+                            % of this liquidity pool is locked.
+                          </div>
+                        </>
+                      ) : (
+                        <>⚠️ No liquidity locks found!</>
+                      )}
+                    </li>
+                  </ul>
                 </div>
               </div>
 
@@ -574,7 +724,7 @@ const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
                             toggle("4");
                           }}
                         >
-                          Profitable Wallets
+                          Top Traders
                         </NavLink>
                       </NavItem>
                       <NavItem>
@@ -595,6 +745,16 @@ const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
                           }}
                         >
                           Token Pairs
+                        </NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink
+                          className={classnames({ active: activeTab === "7" })}
+                          onClick={() => {
+                            toggle("7");
+                          }}
+                        >
+                          Liquidity Providers
                         </NavLink>
                       </NavItem>
                     </Nav>
@@ -698,15 +858,38 @@ const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
                                   <tr>
                                     <th scope="row">{index + 1}</th>
                                     <td>
-                                      <div>{owner.owner_address}</div>
-                                      {owner.owner_address_label && (
+                                      <div className="owner-details">
                                         <div>
-                                          {owner.owner_address_label.replace(
-                                            / \d+$/,
-                                            ""
+                                          {owner.entity_logo ? (
+                                            <img
+                                              src={owner.entity_logo}
+                                              width="25"
+                                            />
+                                          ) : (
+                                            <img
+                                              src={`https://api.dicebear.com/7.x/identicon/svg?backgroundColor=b6e3f4&seed=${owner.owner_address}`}
+                                              width="25"
+                                            />
                                           )}
                                         </div>
-                                      )}
+                                        <div>
+                                          <div className="right copy-container">
+                                            {owner.entity
+                                              ? owner.entity
+                                              : owner.owner_address_label
+                                              ? owner.owner_address_label
+                                              : utilities.shortAddress(
+                                                  owner.owner_address
+                                                )}
+
+                                            <CopyToClipboard
+                                              valueToCopy={owner.owner_address}
+                                            >
+                                              <button></button>
+                                            </CopyToClipboard>
+                                          </div>
+                                        </div>
+                                      </div>
                                     </td>
                                     <td>
                                       <div>
@@ -890,18 +1073,45 @@ const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
                                         <tr>
                                           <th scope="row">{index + 1}</th>
                                           <td>
-                                            <div>
-                                              {owner.owner.owner_address}
-                                            </div>
-                                            {owner.owner
-                                              .owner_address_label && (
+                                            <div className="owner-details">
                                               <div>
-                                                {owner.owner.owner_address_label.replace(
-                                                  / \d+$/,
-                                                  ""
+                                                {owner.owner.entity_logo ? (
+                                                  <img
+                                                    src={
+                                                      owner.owner.entity_logo
+                                                    }
+                                                    width="25"
+                                                  />
+                                                ) : (
+                                                  <img
+                                                    src={`https://api.dicebear.com/7.x/identicon/svg?backgroundColor=b6e3f4&seed=${owner.owner.owner_address}`}
+                                                    width="25"
+                                                  />
                                                 )}
                                               </div>
-                                            )}
+                                              <div>
+                                                <div className="right copy-container">
+                                                  {owner.owner.entity
+                                                    ? owner.owner.entity
+                                                    : owner.owner
+                                                        .owner_address_label
+                                                    ? owner.owner
+                                                        .owner_address_label
+                                                    : utilities.shortAddress(
+                                                        owner.owner
+                                                          .owner_address
+                                                      )}
+
+                                                  <CopyToClipboard
+                                                    valueToCopy={
+                                                      owner.owner.owner_address
+                                                    }
+                                                  >
+                                                    <button></button>
+                                                  </CopyToClipboard>
+                                                </div>
+                                              </div>
+                                            </div>
                                           </td>
                                           <td>
                                             <div>
@@ -1098,6 +1308,76 @@ const TokenDashboard = ({ topOwnersLoading, tokenPricesLoading }) => {
                       </TabPane>
                       <TabPane tabId="6">
                         <h2>Coming soon</h2>
+                      </TabPane>
+
+                      <TabPane tabId="7">
+                        <h2>Liquidity Providers</h2>
+                        <Table responsive>
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Address</th>
+                              <th>Address Type</th>
+                              <th>Percentage (Liquidity Pool)</th>
+                              <th>Amount (Tokens)</th>
+                              <th>Amount (USD)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {!globalDataCache.token.liquidityProviders && (
+                              <Loader />
+                            )}
+                            {globalDataCache.token.liquidityProviders &&
+                              globalDataCache.token.liquidityProviders.map(
+                                (lp, index) => (
+                                  <tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>
+                                      <div>
+                                        {lp.owner_address}
+
+                                        {lp.owner_address.indexOf(
+                                          "0x00000000000000"
+                                        ) > -1 ? (
+                                          <span className="locked">Locked</span>
+                                        ) : (
+                                          <></>
+                                        )}
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div>
+                                        {lp.is_contract ? "Contract" : "Wallet"}
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <ProgressBar
+                                        value={Number(
+                                          lp.percentage_relative_to_total_supply
+                                        ).toFixed(0)}
+                                      />
+                                      <div className="lp-percentage">
+                                        {Number(
+                                          lp.percentage_relative_to_total_supply
+                                        ).toFixed(10)}
+                                        %
+                                      </div>
+                                    </td>
+                                    <td>{lp.balance_formatted}</td>
+                                    <td>
+                                      $
+                                      {Number(
+                                        (globalDataCache.token?.tokenPrice
+                                          ?.pairTotalLiquidityUsd *
+                                          lp.percentage_relative_to_total_supply) /
+                                          100
+                                      ).toFixed(2)}
+                                    </td>
+                                  </tr>
+                                )
+                              )}
+                          </tbody>
+                        </Table>
                       </TabPane>
                     </TabContent>
                   </div>

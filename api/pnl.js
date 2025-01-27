@@ -7,14 +7,18 @@ const router = express.Router();
 router.get("/api/token/:tokenAddress/pnl", async function (req, res, next) {
   try {
     let tokenAddress = req.params.tokenAddress;
+    const chain = req.query.chain || "base";
 
-    const pnlPromise = fetch(`${baseURL}/erc20/${tokenAddress}/top-gainers`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "X-API-Key": API_KEY,
-      },
-    });
+    const pnlPromise = fetch(
+      `${baseURL}/erc20/${tokenAddress}/top-gainers?chain=${chain}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "X-API-Key": API_KEY,
+        },
+      }
+    );
 
     const [pnlResponse] = await Promise.all([pnlPromise]);
 
@@ -27,7 +31,10 @@ router.get("/api/token/:tokenAddress/pnl", async function (req, res, next) {
     const tokenPNL = await pnlResponse.json();
 
     return res.status(200).json({
-      tokenPNL: tokenPNL.result,
+      tokenPNL: tokenPNL.result.sort(
+        (a, b) =>
+          parseFloat(b.realized_profit_usd) - parseFloat(a.realized_profit_usd)
+      ),
     });
   } catch (e) {
     next(e);

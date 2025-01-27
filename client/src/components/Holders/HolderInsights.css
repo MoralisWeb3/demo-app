@@ -1,0 +1,57 @@
+.holders.container {
+  max-width: 1200px;
+}
+.analytics-summary .summary {
+  display: flex;
+}
+
+.pie-chart-container {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+}
+
+.chart-title {
+  display: flex;
+  align-items: center;
+}
+
+.chart-title button {
+  margin-left: auto;
+}
+
+ul {
+  margin: 0;
+}
+
+ul.stats-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #091837;
+  text-transform: capitalize;
+  padding: 5px 0px;
+}
+
+li:last-of-type {
+  border-bottom: none !important;
+}
+
+ul.styled-distribution-container li {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #091837;
+  text-transform: capitalize;
+  padding: 5px 0px;
+}
+
+.category-value {
+  width: 25%;
+  min-width: 25%;
+  text-transform: capitalize;
+}
+
+.distribution-bar {
+  height: 10px !important;
+  border-radius: 40px;
+}

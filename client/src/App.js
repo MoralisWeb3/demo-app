@@ -17,14 +17,20 @@ import DeFiTokens from "./components/WalletPortfolio/DeFiPositions";
 import DeFiPosition from "./components/WalletPortfolio/DeFiPositionDetail";
 import History from "./components/WalletPortfolio/History";
 import WalletApprovals from "./components/WalletPortfolio/WalletApprovals";
+import WalletSwaps from "./components/WalletPortfolio/WalletSwaps";
 import NFTMarketplace from "./components/NFTMarketplace/NFTMarketplace";
 import NFTCollection from "./components/NFTMarketplace/NFTCollection";
 import NFTDetail from "./components/NFTMarketplace/NFTDetail";
 import MarketData from "./components/MarketData/MarketData";
 import EntitySearch from "./components/Entities/EntitySearch";
 import EntityDashboard from "./components/Entities/EntityDashboard";
+import PairSearch from "./components/PairAnalytics/PairSearch";
+import PairDashboard from "./components/PairAnalytics/PairDashboard";
 import EntityCategory from "./components/Entities/EntityCategory";
 import SpamChecker from "./components/SpamChecker/SpamChecker";
+import TrendingFeed from "./components/TrendingFeed/TrendingFeed";
+import HolderInsights from "./components/Holders/HolderInsights";
+import VolumeStats from "./components/VolumeStats/VolumeStats";
 import { DataProvider, useData } from "./DataContext";
 import "./custom.scss";
 
@@ -152,6 +158,22 @@ const Navigation = () => {
           </div>
 
           <div className="col-lg-4 equal">
+            <Link className="demo-link" to="/pairs/">
+              <div className="wallet-card">
+                <div
+                  className="card-img"
+                  style={{ backgroundImage: "url('/images/pairs.png')" }}
+                ></div>
+                <div className="demo-title">Pair Analytics</div>
+                <p>
+                  An example Token Pair Dashboard page displaying detailed token
+                  insights, liquidity provider data and more.
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="col-lg-4 equal">
             <Link className="demo-link" to="/entities/">
               <div className="wallet-card">
                 <div
@@ -192,7 +214,7 @@ const Navigation = () => {
                   className="card-img"
                   style={{ backgroundImage: "url('/images/market-data.png')" }}
                 ></div>
-                <div className="demo-title">Trending Tokens & NFTs</div>
+                <div className="demo-title">Top Tokens & NFTs</div>
                 <p>
                   Summary market data insights across global cryptocurrencies,
                   trending ERC20 tokens, popular NFT collections and more.
@@ -212,6 +234,56 @@ const Navigation = () => {
                 <p>
                   This tool analyzes a wallet's NFTs and ERC20 tokens to
                   determine how spammy the wallet is.
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="col-lg-4 equal">
+            <Link className="demo-link" to="/trending-feed">
+              <div className="wallet-card">
+                <div
+                  className="card-img"
+                  style={{ backgroundImage: "url('/images/trending.png')" }}
+                ></div>
+                <div className="demo-title">Trending Feed</div>
+                <p>
+                  An example trending feed based on your saved tokens. Tracks
+                  recent swap events, top owner activity and top trader
+                  activity.
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="col-lg-4 equal">
+            <Link className="demo-link" to="/holders">
+              <div className="wallet-card">
+                <div
+                  className="card-img"
+                  style={{ backgroundImage: "url('/images/holders.png')" }}
+                ></div>
+                <div className="demo-title">Holder Insights</div>
+                <p>
+                  An example dashboard analyzing holders of a given token,
+                  including historical time-series, acquisition sources and
+                  distribution.
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="col-lg-4 equal">
+            <Link className="demo-link" to="/volume-stats">
+              <div className="wallet-card">
+                <div
+                  className="card-img"
+                  style={{ backgroundImage: "url('/images/volume.png')" }}
+                ></div>
+                <div className="demo-title">Volume Stats</div>
+                <p>
+                  Volume stats by chain and/or token category, including total
+                  volume, buy volume, sell volume and more.
                 </p>
               </div>
             </Link>
@@ -272,9 +344,19 @@ function App() {
             path="/wallets/:walletAddress/approvals"
             element={<WalletApprovals />}
           />
+          <Route
+            path="/wallets/:walletAddress/swaps"
+            element={<WalletSwaps />}
+          />
 
           <Route path="/tokens/" element={<TokenViewer />} />
           <Route path="/tokens/:tokenAddress" element={<TokenDashboard />} />
+
+          <Route path="/pairs/" element={<PairSearch />} />
+          <Route
+            path="/chain/:chain/pairs/:address"
+            element={<PairDashboard />}
+          />
 
           <Route path="/entities" element={<EntitySearch />} />
           <Route path="/entities/:id" element={<EntityDashboard />} />
@@ -287,6 +369,12 @@ function App() {
           <Route path="/market-data" element={<MarketData />} />
 
           <Route path="/spam-checker" element={<SpamChecker />} />
+
+          <Route path="/trending-feed" element={<TrendingFeed />} />
+
+          <Route path="/holders" element={<HolderInsights />} />
+
+          <Route path="/volume-stats" element={<VolumeStats />} />
         </Routes>
       </div>
 
