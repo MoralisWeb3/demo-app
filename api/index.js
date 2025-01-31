@@ -28,16 +28,6 @@ const tokens = [
     address: "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
     pair: "0xc2eab7d33d3cb97692ecb231a5d0e4a649cb539d",
   },
-  {
-    symbol: "GOAT",
-    address: "0x666f5aeB760DA6D66e5346eb53898270dfcff366",
-    pair: "0x0afa28f97125f33ac5694a51f9c0554da1026d1e",
-  },
-  {
-    symbol: "BITCOIN",
-    address: "0x72e4f9F808C49A2a61dE9C5896298920Dc4EEEa9",
-    pair: "0x0c30062368eefb96bf3ade1218e685306b8e89fa",
-  },
 ];
 
 const savedWallets = [
@@ -48,6 +38,10 @@ const savedWallets = [
   {
     name: "PEPE Whale Trader",
     address: "0x25cd302e37a69d70a6ef645daea5a7de38c66e2a",
+  },
+  {
+    name: "PEPE large trader",
+    address: "0x3810b6c2fda013cc9462c5b5447f9221995e7ca1",
   },
 ];
 
@@ -102,7 +96,8 @@ router.get("/api/trending-feed", async function (req, res, next) {
     ]);
 
     const savedWalletUrls = savedWallets.map(
-      (address) => `${baseURL}/wallets/${address.address}/swaps?limit=10`
+      (address) =>
+        `${baseURL}/wallets/${address.address}/swaps?limit=10&fromDate=${fromDateOHLC}`
     );
 
     // Step 2: Fetch All Data in Parallel
@@ -192,7 +187,10 @@ router.get("/api/trending-feed", async function (req, res, next) {
     const traderUrls = tokenData.flatMap((token) =>
       token.topGainers
         .slice(0, 8)
-        .map((trader) => `${baseURL}/wallets/${trader.address}/swaps?limit=5`)
+        .map(
+          (trader) =>
+            `${baseURL}/wallets/${trader.address}/swaps?limit=5&fromDate=${fromDateOHLC}`
+        )
     );
     const traderSwaps = await Promise.all(
       traderUrls.map((url) => fetchWithErrorHandling(url))
@@ -205,20 +203,23 @@ router.get("/api/trending-feed", async function (req, res, next) {
     });
 
     // Step 4c: Whale Movements
-    const holderUrls = tokenData.flatMap((token) =>
+    let holderUrlData = tokenData.flatMap((token) =>
       token.owners
-        .slice(0, 2)
-        .map(
-          (holder) => `${baseURL}/wallets/${holder.owner_address}/swaps?limit=5`
-        )
+        .filter((holder) => !holder.owner_address.includes("0x0000000000")) // Exclude addresses with "0x0000000000"
+        .slice(0, 5)
+        .map((holder) => ({
+          token,
+          url: `${baseURL}/wallets/${holder.owner_address}/swaps?limit=5&fromDate=${fromDateOHLC}`,
+        }))
     );
+
     const holderSwaps = await Promise.all(
-      holderUrls.map((url) => fetchWithErrorHandling(url))
+      holderUrlData.map((data) => fetchWithErrorHandling(data.url))
     );
 
     holderSwaps.forEach((response, index) => {
       const trades = response.result || [];
-      const token = tokenData[Math.floor(index / 2)];
+      const token = holderUrlData[index].token; // Correctly reference the token here
       trades.forEach((tx) =>
         labelTransaction(tx, "whaleMovement", token.symbol)
       );
@@ -323,7 +324,7 @@ router.get("/api/market-data/top-erc20", async function (req, res, next) {
       }).then((response) => response.json())
     );
 
-    const [top_tokens] = await Promise.all(fetchPromises);
+    let [top_tokens] = await Promise.all(fetchPromises);
 
     top_tokens = top_tokens ? top_tokens : [];
 

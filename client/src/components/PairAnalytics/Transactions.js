@@ -507,7 +507,7 @@ const Transactions = ({
                         👁
                       </button>
                       {tx.subCategory === "newPosition" &&
-                        Number(tx.totalValueUsd) < 10 && <div>⚠️</div>}
+                        Number(tx.totalValueUsd) < 1 && <div>⚠️</div>}
                       <div className="repeat">
                         {isRepeatedWallet ? `🧐` : " "}
                       </div>

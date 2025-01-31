@@ -9,15 +9,54 @@ import "./Trending.css";
 import * as utilities from "../../utilities.js";
 import CopyToClipboard from "../Misc/CopyToClipboard";
 import MiniAreaChart from "./MiniAreaChart";
+import SideDrawer from "../PairAnalytics/SideDrawer"; // Import the reusable SideDrawer component
+import TransactionImage from "../WalletPortfolio/TransactionImage";
+import SimpleCategory from "../WalletPortfolio/SimpleCategory";
 
 const TrendingFeed = () => {
   const { globalDataCache, setGlobalDataCache } = useData();
   const [loading, setLoading] = useState(false);
+  const [menuLoading, setMenuLoading] = useState(false);
   const [feedLoading, setFeedLoading] = useState(false);
   const [error, setError] = useState(null);
   const [highlightedIds, setHighlightedIds] = useState([]); // Track new transaction IDs
   const [filter, setFilter] = useState("all"); // Filter state
   const [expandedItem, setExpandedItem] = useState(null); // Track expanded item
+  const [selectedHolder, setSelectedHolder] = useState(null); // Store the clicked holder
+  const [walletData, setWalletData] = useState(null); // Store fetched wallet data
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Track side menu state
+
+  const handleRowClick = (transaction, sentence, baseToken, isBuy) => {
+    transaction.sentence = sentence;
+    transaction.baseToken = baseToken;
+    transaction.isBuy = isBuy;
+    setSelectedHolder(transaction); // Store the clicked holder
+    setIsMenuOpen(true); // Open the sidebar
+    fetchWalletData(transaction.walletAddress, baseToken.address); // Fetch additional wallet data
+  };
+
+  // Fetch wallet information
+  const fetchWalletData = async (walletAddress, tokenAddress) => {
+    setMenuLoading(true);
+    setError(null);
+    setWalletData(null);
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/wallet/${walletAddress}/token/${tokenAddress}/top-holder?chain=${globalDataCache.selectedChain}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch wallet data");
+      }
+      const data = await response.json();
+      setWalletData(data);
+    } catch (err) {
+      console.error("Error fetching wallet data:", err);
+      setError("Failed to load wallet data");
+    } finally {
+      setMenuLoading(false);
+    }
+  };
 
   const containerStyle = {
     maxWidth: "1800px",
@@ -294,13 +333,12 @@ const TrendingFeed = () => {
                         isBuy ? "buy" : "sell"
                       } ${isNew ? "highlight" : ""}`}
                       key={index}
+                      onClick={() =>
+                        handleRowClick(transaction, sentence, baseToken, isBuy)
+                      }
+                      style={{ cursor: "pointer" }}
                     >
-                      <div
-                        className="tx-type"
-                        onClick={() =>
-                          toggleExpandItem(transaction.transactionHash)
-                        }
-                      >
+                      <div className="tx-type">
                         <div className={`icon ${transaction.type}`}>
                           {transaction.type === "whaleMovement" && <>🐋</>}
                           {transaction.type === "tradeIdea" && <>⚡️</>}
@@ -382,6 +420,139 @@ const TrendingFeed = () => {
           </div>
         </div>
       </div>
+
+      <SideDrawer
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        title={
+          <>
+            {selectedHolder?.type === "whaleMovement" && <>🐋 Whale Details</>}
+            {selectedHolder?.type === "tradeIdea" && (
+              <>⚡️ Large Trader Details</>
+            )}
+            {selectedHolder?.type === "largeTrade" && (
+              <>💸 Large Trader Details</>
+            )}
+            {selectedHolder?.type === "smartMoney" && (
+              <>🔮 Smart Money Details</>
+            )}
+            {selectedHolder?.type === "savedWalletActivity" && (
+              <>⭐️ Saved Wallet Details</>
+            )}
+          </>
+        }
+        loading={menuLoading}
+        error={error}
+        content={
+          selectedHolder && (
+            <>
+              <p>
+                <strong>Address:</strong> {selectedHolder.walletAddress}
+              </p>
+              <p>
+                <strong>Transaction Hash:</strong>{" "}
+                {selectedHolder.transactionHash}
+              </p>
+              <div className="swap-summary">
+                {selectedHolder.sentence}
+                <strong>
+                  {selectedHolder.isBuy ? (
+                    <span className="positive">bought</span>
+                  ) : (
+                    <span className="negative">sold</span>
+                  )}{" "}
+                  <span className="usd-amount">
+                    {utilities.formatAsUSD(selectedHolder.totalValueUsd)}
+                  </span>
+                </strong>{" "}
+                of{" "}
+                <a
+                  href={`https://moralis.com/chain/ethereum/token/price/${selectedHolder.baseToken.address}`}
+                  target="_blank"
+                >
+                  {selectedHolder.baseToken.logo && (
+                    <img
+                      src={selectedHolder.baseToken.logo}
+                      width="20"
+                      alt={selectedHolder.baseToken.symbol}
+                    />
+                  )}
+                  <strong>{selectedHolder.baseToken.symbol} </strong>
+                </a>
+                (
+                <span className={selectedHolder.isBuy ? "buy" : "sell"}>
+                  {selectedHolder.isBuy ? "+" : ""}
+                  {utilities.formatPriceNumber(selectedHolder.baseToken.amount)}
+                </span>
+                )
+              </div>
+            </>
+          )
+        }
+        loadedContent={
+          walletData && (
+            <div>
+              <h5>
+                <b>Portfolio</b>
+              </h5>
+              <ul className="mini-token-list">
+                {walletData.tokenBalances.map((token, index) => (
+                  <li key={`traders-portfolio-${index}`}>
+                    <img src={token.logo} alt={token.symbol} width="20" />
+                    <div>
+                      <a
+                        href={`https://moralis.com/chain/ethereum/token/price/${token.token_address}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {token.symbol}
+                      </a>
+                    </div>
+                    <div className="token-balance">
+                      {utilities.formatAsUSD(token.usd_value)} (
+                      <span
+                        className={`${
+                          Number(token.usd_price_24hr_percent_change) > 0
+                            ? `positive`
+                            : `negative`
+                        }`}
+                      >
+                        {Number(token.usd_price_24hr_percent_change).toFixed(2)}
+                        %
+                      </span>
+                      )
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              <h5>
+                <b>Recent Activity</b>
+              </h5>
+
+              <ul className="mini-history">
+                {walletData.walletHistory.map((item, index) => (
+                  <li key={`traders-history-${index}`} className="uniswap-item">
+                    <div className="history-icon">
+                      <TransactionImage transaction={item} chain={item.chain} />
+                    </div>
+                    <div className="tx-detail">
+                      <div className="tx-category">
+                        <SimpleCategory category={item.category} />
+                      </div>
+                      <div className="summary">{item.summary}</div>
+                    </div>
+                    <div className="date">
+                      {moment(item.block_timestamp).fromNow()}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+        type="holders"
+      />
     </div>
   );
 };
