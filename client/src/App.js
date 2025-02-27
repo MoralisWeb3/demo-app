@@ -31,6 +31,7 @@ import SpamChecker from "./components/SpamChecker/SpamChecker";
 import TrendingFeed from "./components/TrendingFeed/TrendingFeed";
 import HolderInsights from "./components/Holders/HolderInsights";
 import VolumeStats from "./components/VolumeStats/VolumeStats";
+import PumpFun from "./components/PumpFun/PumpFun";
 import { DataProvider, useData } from "./DataContext";
 import "./custom.scss";
 
@@ -288,6 +289,22 @@ const Navigation = () => {
               </div>
             </Link>
           </div>
+
+          <div className="col-lg-4 equal">
+            <Link className="demo-link" to="/pumpfun">
+              <div className="wallet-card">
+                <div
+                  className="card-img"
+                  style={{ backgroundImage: "url('/images/volume.png')" }}
+                ></div>
+                <div className="demo-title">PumpFun Tokens</div>
+                <p>
+                  Discover new tokens, tokens bonding that are close to
+                  graduating, and newly graduated tokens.
+                </p>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -375,6 +392,8 @@ function App() {
           <Route path="/holders" element={<HolderInsights />} />
 
           <Route path="/volume-stats" element={<VolumeStats />} />
+
+          <Route path="/pumpfun" element={<PumpFun />} />
         </Routes>
       </div>
 

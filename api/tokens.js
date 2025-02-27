@@ -6,6 +6,54 @@ const API_KEY = process.env.API_KEY;
 const baseURL = "https://deep-index.moralis.io/api/v2.2";
 const router = express.Router();
 
+router.get("/api/pumpfun", async (req, res) => {
+  try {
+    const urls = [
+      "https://solana-gateway.moralis.io/token/mainnet/exchange/pumpfun/new",
+      "https://solana-gateway.moralis.io/token/mainnet/exchange/pumpfun/bonding",
+      "https://solana-gateway.moralis.io/token/mainnet/exchange/pumpfun/graduated",
+    ];
+
+    // Create array of fetch promises
+    const fetchPromises = urls.map((url) =>
+      fetch(url, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "X-API-Key": `${API_KEY}`,
+        },
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+    );
+
+    // Execute all requests in parallel and wait for all to complete
+    const [newData, bondingData, graduatedData] = await Promise.all(
+      fetchPromises
+    );
+
+    // Combine results into a single response object
+    const responseData = {
+      new: newData.result,
+      bonding: bondingData.result,
+      graduated: graduatedData.result,
+    };
+
+    // Send successful response
+    res.json(responseData);
+  } catch (error) {
+    // Handle errors
+    console.error("Error fetching pumpfun data:", error);
+    res.status(500).json({
+      error: "Failed to fetch pumpfun data",
+      message: error.message,
+    });
+  }
+});
+
 router.post("/api/token", async function (req, res, next) {
   try {
     let tokenAddress = req.body.address;
