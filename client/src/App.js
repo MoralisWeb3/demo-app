@@ -295,7 +295,7 @@ const Navigation = () => {
               <div className="wallet-card">
                 <div
                   className="card-img"
-                  style={{ backgroundImage: "url('/images/volume.png')" }}
+                  style={{ backgroundImage: "url('/images/pumpfun.png')" }}
                 ></div>
                 <div className="demo-title">PumpFun Tokens</div>
                 <p>
